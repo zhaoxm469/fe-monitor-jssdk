@@ -1,0 +1,4 @@
+/src/packages/**/*.md
+*.html
+dist
+__test__
