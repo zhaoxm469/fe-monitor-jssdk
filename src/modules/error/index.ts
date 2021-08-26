@@ -1,18 +1,16 @@
-import { jsError } from './js.error';
-import { promiseError } from './promise.error';
-import { resourcesError } from './resources.error';
+import { ConsoleError } from './console.error';
+import { JsError } from './js.error';
+import { PromiseError } from './promise.error';
+import { ResourcesError } from './resources.error';
 
-export class FeErrorReporter {
-    reporter() {}
-}
-
-export class FeError {
+export class FeErrorMonitor {
     constructor() {
         this.init();
     }
     init(): void {
-        jsError();
-        promiseError();
-        resourcesError();
+        new JsError();
+        new PromiseError();
+        new ResourcesError();
+        new ConsoleError();
     }
 }

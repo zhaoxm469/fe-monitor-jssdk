@@ -1,5 +1,6 @@
-import { globalConf } from './conf';
-import { FeError } from './modules/error';
+import { globalConf } from './conf/global';
+import { FeApiMonitor } from './modules/api';
+import { FeErrorMonitor } from './modules/error';
 import { iConf } from './types';
 import { guid } from './utils';
 
@@ -12,7 +13,8 @@ class Fmr {
     }
 
     init(): void {
-        new FeError();
+        if (globalConf.isJsError) new FeErrorMonitor();
+        if (globalConf.isAjax) new FeApiMonitor();
     }
 
     setConf(opts: iConf) {

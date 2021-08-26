@@ -3,18 +3,18 @@
 ## 使用
 
 ```js
-	const fmr = new Fmr({
-		aId:'xxxxx',
-		spa:true,
-	});
+const fmr = new Fmr({
+	aId:'xxxxx',
+	spa:true,
+});
 
-	fmr.report({
-		// 必填创建自定义监控项时自动生成
-		category: 100, 
-		msg: 'hello world',
-		// 自定义字段，支持c1~c5共5个字段
-		c1: 'xx' 
-	}); 
+fmr.report({
+	// 必填创建自定义监控项时自动生成
+	category: 100, 
+	msg: 'hello world',
+	// 自定义字段，支持c1~c5共5个字段
+	c1: 'xx' 
+}); 
 ```
 
 ## script 命令
