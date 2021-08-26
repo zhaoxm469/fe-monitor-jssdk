@@ -14,48 +14,62 @@ export interface iConf {
     isJsError: boolean;
 }
 
-export interface iFeErrorConf {
-    isJs: boolean;
-    isResources: boolean;
+type CategoryType = 'js' | 'resource' | 'promise' | 'console.error' | 'vue';
+
+type reporterLevel = 'error' | 'performance' | 'api' | 'pv';
+
+enum CommonEnum {
+    aId = 'a',
+    url = 'ul',
+    uid = 'uid',
+    uuid = 'uuid',
+    level = 'le',
+    category = 'cg'
 }
 
-type CategoryType = 'js' | 'resource' | 'promise' | 'console.error';
-
-type reporterLevel = 'error' | 'performance' | 'api';
+interface CommonReportLog {
+    // 应用ID
+    [CommonEnum.aId]?: string;
+    // 页面地址
+    [CommonEnum.url]?: string;
+    // 用户ID
+    [CommonEnum.uid]?: string;
+    // 级别
+    [CommonEnum.level]?: reporterLevel;
+    // 分类
+    [CommonEnum.category]?: CategoryType;
+}
 
 export enum errJsonEnum {
-    aId = 'a',
-    level = 'le',
     msg = 'm',
     source = 's',
     lineno = 'l',
     colno = 'c',
     error = 'e',
     targetName = 'tn',
-    url = 'ul',
-    category = 'cg',
     pageLocation = 'pl',
+
+    aId = 'a',
+    url = 'ul',
     uid = 'uid',
-    uuid = 'uuid'
+    uuid = 'uuid',
+    level = 'le',
+    category = 'cg'
 }
 
-export type ErrorInfo = {
-    [errJsonEnum.level]?: reporterLevel;
-    [errJsonEnum.category]?: CategoryType;
+export interface ErrorInfo extends CommonReportLog {
     [errJsonEnum.targetName]?: string;
     [errJsonEnum.msg]?: string;
     [errJsonEnum.source]?: string;
     [errJsonEnum.lineno]?: number;
     [errJsonEnum.colno]?: number;
     [errJsonEnum.error]?: string;
-    [errJsonEnum.url]?: string;
-    [errJsonEnum.uuid]?: string;
     [errJsonEnum.pageLocation]?: string;
-};
+}
 
 type ApiErrorType = 'xmlHttp' | 'fetch';
 
-export enum ApiErrJsonEnum {
+export enum ApiJsonEnum {
     // http状态码
     httpStatusCode = 'sc',
     // 请求发送时间戳
@@ -72,13 +86,30 @@ export enum ApiErrJsonEnum {
     type = 'tp'
 }
 
-export type ApiErrorInfo = {
-    [ApiErrJsonEnum.httpStatusCode]?: number;
-    [ApiErrJsonEnum.sendBeginTime]?: number;
-    [ApiErrJsonEnum.apiUrl]?: string;
-    [ApiErrJsonEnum.httpSuccess]?: boolean;
-    [ApiErrJsonEnum.totalTime]?: number;
-    [ApiErrJsonEnum.msg]?: string;
-    [errJsonEnum.level]: reporterLevel;
-    [ApiErrJsonEnum.type]: ApiErrorType;
-};
+export interface ApiErrorInfo extends CommonReportLog {
+    [ApiJsonEnum.httpStatusCode]?: number;
+    [ApiJsonEnum.sendBeginTime]?: number;
+    [ApiJsonEnum.apiUrl]?: string;
+    [ApiJsonEnum.httpSuccess]?: boolean;
+    [ApiJsonEnum.totalTime]?: number;
+    [ApiJsonEnum.msg]?: string;
+    [ApiJsonEnum.type]: ApiErrorType;
+}
+
+enum PvAliasEnum {
+    // 标题是
+    title = 't',
+    // 来源
+    referrer = 'r',
+    // dpr
+    devicePixelRatio = 'd',
+    // document 编码
+    charset = 'c'
+}
+
+export interface PvInfoLog extends CommonReportLog {
+    [PvAliasEnum.title]: string;
+    [PvAliasEnum.referrer]: string;
+    [PvAliasEnum.devicePixelRatio]: string;
+    [PvAliasEnum.charset]: string;
+}

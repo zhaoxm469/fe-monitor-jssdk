@@ -2,6 +2,7 @@ import { ConsoleError } from './console.error';
 import { JsError } from './js.error';
 import { PromiseError } from './promise.error';
 import { ResourcesError } from './resources.error';
+import { VueError } from './vue.error';
 
 export class FeErrorMonitor {
     constructor() {
@@ -12,5 +13,6 @@ export class FeErrorMonitor {
         new PromiseError();
         new ResourcesError();
         new ConsoleError();
+        new VueError();
     }
 }

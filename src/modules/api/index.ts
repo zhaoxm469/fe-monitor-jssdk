@@ -1,6 +1,6 @@
 import { globalConf } from '../../conf/global';
 import { clientReport } from '../../report';
-import { ApiErrJsonEnum, ApiErrorInfo, errJsonEnum } from '../../types';
+import { ApiJsonEnum, ApiErrorInfo, errJsonEnum } from '../../types';
 
 const parseUrl = function (value: string | undefined) {
     return value && 'string' == typeof value
@@ -18,14 +18,14 @@ const getCommonInfo = ({
     type
 }: any): ApiErrorInfo => {
     return {
-        [ApiErrJsonEnum.httpStatusCode]: httpStatusCode,
-        [ApiErrJsonEnum.sendBeginTime]: sendBeginTime,
-        [ApiErrJsonEnum.apiUrl]: apiUrl,
-        [ApiErrJsonEnum.httpSuccess]: httpSuccess,
-        [ApiErrJsonEnum.totalTime]: totalTime,
-        [ApiErrJsonEnum.msg]: msg,
+        [ApiJsonEnum.httpStatusCode]: httpStatusCode,
+        [ApiJsonEnum.sendBeginTime]: sendBeginTime,
+        [ApiJsonEnum.apiUrl]: apiUrl,
+        [ApiJsonEnum.httpSuccess]: httpSuccess,
+        [ApiJsonEnum.totalTime]: totalTime,
+        [ApiJsonEnum.msg]: msg,
         [errJsonEnum.level]: 'api',
-        [ApiErrJsonEnum.type]: type
+        [ApiJsonEnum.type]: type
     };
 };
 
@@ -92,11 +92,11 @@ export class FeApiMonitor {
                                 const r = xhr.getResponseHeader('Content-Type');
                                 if (r && !/(text)|(json)/.test(r)) return;
                             }
-                            params[ApiErrJsonEnum.httpStatusCode] = status;
+                            params[ApiJsonEnum.httpStatusCode] = status;
                         } else {
-                            params[ApiErrJsonEnum.httpStatusCode] =
+                            params[ApiJsonEnum.httpStatusCode] =
                                 xhr.status || 0;
-                            params[ApiErrJsonEnum.httpSuccess] = false;
+                            params[ApiJsonEnum.httpSuccess] = false;
                         }
 
                         clientReport(params);
@@ -124,8 +124,8 @@ export class FeApiMonitor {
                 url = (t && 'string' != typeof t ? t.url : t) || '',
                 page = parseUrl(url as string);
 
-            params[ApiErrJsonEnum.apiUrl] = page;
-            params[ApiErrJsonEnum.sendBeginTime] = begin;
+            params[ApiJsonEnum.apiUrl] = page;
+            params[ApiJsonEnum.sendBeginTime] = begin;
 
             if (!page) return oldFetch.apply(window, arg);
             return oldFetch
@@ -142,12 +142,12 @@ export class FeApiMonitor {
                     }
 
                     response.text().then(function (res) {
-                        params[ApiErrJsonEnum.totalTime] = totalTime;
-                        params[ApiErrJsonEnum.msg] = !response.ok
+                        params[ApiJsonEnum.totalTime] = totalTime;
+                        params[ApiJsonEnum.msg] = !response.ok
                             ? res.substr(0, globalConf.parameterLen)
                             : '';
-                        params[ApiErrJsonEnum.httpSuccess] = !!response.ok;
-                        params[ApiErrJsonEnum.httpStatusCode] = e.status;
+                        params[ApiJsonEnum.httpSuccess] = !!response.ok;
+                        params[ApiJsonEnum.httpStatusCode] = e.status;
 
                         clientReport(params);
                     });
@@ -155,8 +155,8 @@ export class FeApiMonitor {
                 })
                 .catch((error) => {
                     const totalTime = +new Date() - begin;
-                    params[ApiErrJsonEnum.totalTime] = totalTime;
-                    params[ApiErrJsonEnum.msg] =
+                    params[ApiJsonEnum.totalTime] = totalTime;
+                    params[ApiJsonEnum.msg] =
                         'fetch-catch -> ' + error?.message;
                     clientReport(params);
                 });

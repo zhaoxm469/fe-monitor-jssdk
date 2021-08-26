@@ -1,7 +1,7 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-08-24 11:24:10
- * @LastEditTime: 2021-08-25 19:15:03
+ * @LastEditTime: 2021-08-26 10:42:10
  * @LastEditors: vscode
  * @Description:捕获promise错误。
  */
@@ -16,7 +16,7 @@ export class PromiseError extends FeErrorReport {
     }
 
     init() {
-        window.addEventListener('unhandledrejection', this.sendError);
+        window.addEventListener('unhandledrejection', this.sendError, true);
     }
 
     sendError(ev: PromiseRejectionEvent) {
