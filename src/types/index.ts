@@ -48,6 +48,7 @@ export enum errJsonEnum {
     error = 'e',
     targetName = 'tn',
     pageLocation = 'pl',
+    pageWh = 'pwh',
 
     aId = 'a',
     url = 'ul',

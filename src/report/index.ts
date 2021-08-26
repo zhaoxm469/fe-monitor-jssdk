@@ -5,10 +5,13 @@ import { navSendBeacon } from './sendBeacon';
 import { xmlSend } from './xmlHttp';
 const uuid = localStorage.getItem('fmr-uuid');
 
+const { innerWidth, innerHeight } = window;
+
 // 发送请求上报
 export function clientReport(data: any) {
     data[errJsonEnum.pageLocation] = window.location.href;
     data[errJsonEnum.uuid] = uuid || '';
+    data[errJsonEnum.pageWh] = `${innerWidth} * ${innerHeight}`;
 
     const api = baseUrl + '/' + globalConf.aId,
         params = JSON.stringify(data);
