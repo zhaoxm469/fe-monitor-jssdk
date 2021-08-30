@@ -1,3 +1,11 @@
+/*
+ * @Author: zhaoxingming
+ * @Date: 2021-08-24 14:59:12
+ * @LastEditTime: 2021-08-30 10:10:07
+ * @LastEditors: vscode
+ * @Description: 监听api接口性能
+ */
+
 import { globalConf } from '../../conf/global';
 import { clientReport } from '../../report';
 import { ApiJsonEnum, ApiErrorInfo, errJsonEnum } from '../../types';
@@ -29,7 +37,7 @@ const getCommonInfo = ({
     };
 };
 
-export class FeApiMonitor {
+export default class FeApiMonitor {
     constructor() {
         this.init();
     }

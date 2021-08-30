@@ -7,7 +7,11 @@ export const globalConf: iConf = {
     // 是否上报ajax性能数据，错误等信息
     isAjax: true,
     // 是否上报JS报错
-    isJsError: true
+    isJsError: true,
+    // 是否上报PV数据
+    isPv: true,
+    // 是否上报前端性能
+    isPerformance: true
 };
 
 export const baseUrl = 'http://localhost:9987/reporter';

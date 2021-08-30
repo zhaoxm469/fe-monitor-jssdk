@@ -1,4 +1,4 @@
-export const imgSend = (api: string, params: string) => {
+export default function (api: string, params: string) {
     const oImg = new Image();
     oImg.src = api + '?' + params;
-};
+}

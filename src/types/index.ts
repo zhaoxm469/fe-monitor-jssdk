@@ -12,22 +12,31 @@ export interface iConf {
     isAjax: boolean;
     // 是否上报JS报错
     isJsError: boolean;
+    // 是否上报PV
+    isPv?: boolean;
+    // 是否上报UV
+    isUv?: boolean;
+    // 是否上报前端页面性能
+    isPerformance: boolean;
 }
 
 type CategoryType = 'js' | 'resource' | 'promise' | 'console.error' | 'vue';
 
 type reporterLevel = 'error' | 'performance' | 'api' | 'pv';
 
-enum CommonEnum {
+export enum CommonEnum {
     aId = 'a',
     url = 'ul',
     uid = 'uid',
     uuid = 'uuid',
     level = 'le',
-    category = 'cg'
+    category = 'cg',
+    pageLocation = 'pl',
+    pageWh = 'pwh',
+    selector = 'st'
 }
 
-interface CommonReportLog {
+export interface CommonReportLog {
     // 应用ID
     [CommonEnum.aId]?: string;
     // 页面地址
@@ -38,6 +47,8 @@ interface CommonReportLog {
     [CommonEnum.level]?: reporterLevel;
     // 分类
     [CommonEnum.category]?: CategoryType;
+    // 当前发生事件的页面
+    [CommonEnum.pageLocation]?: string;
 }
 
 export enum errJsonEnum {
@@ -47,13 +58,10 @@ export enum errJsonEnum {
     colno = 'c',
     error = 'e',
     targetName = 'tn',
-    pageLocation = 'pl',
-    pageWh = 'pwh',
 
     aId = 'a',
     url = 'ul',
     uid = 'uid',
-    uuid = 'uuid',
     level = 'le',
     category = 'cg'
 }
@@ -65,7 +73,6 @@ export interface ErrorInfo extends CommonReportLog {
     [errJsonEnum.lineno]?: number;
     [errJsonEnum.colno]?: number;
     [errJsonEnum.error]?: string;
-    [errJsonEnum.pageLocation]?: string;
 }
 
 type ApiErrorType = 'xmlHttp' | 'fetch';
@@ -97,7 +104,7 @@ export interface ApiErrorInfo extends CommonReportLog {
     [ApiJsonEnum.type]: ApiErrorType;
 }
 
-enum PvAliasEnum {
+export enum PvAliasEnum {
     // 标题是
     title = 't',
     // 来源

@@ -1,4 +1,4 @@
-export function xmlSend(api: string, params: string) {
+export default function (api: string, params: string) {
     var userAgent = navigator.userAgent;
     if (XMLHttpRequest) {
         var xhr = new XMLHttpRequest();

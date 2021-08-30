@@ -1,17 +1,13 @@
 import { baseUrl, globalConf } from '../conf/global';
-import { errJsonEnum, ErrorInfo } from '../types';
-import { imgSend } from './img';
-import { navSendBeacon } from './sendBeacon';
-import { xmlSend } from './xmlHttp';
-const uuid = localStorage.getItem('fmr-uuid');
+import { setCommonParams } from './common';
 
-const { innerWidth, innerHeight } = window;
+import imgSend from './img';
+import navSendBeacon from './sendBeacon';
+import xmlSend from './xmlHttp';
 
 // 发送请求上报
 export function clientReport(data: any) {
-    data[errJsonEnum.pageLocation] = window.location.href;
-    data[errJsonEnum.uuid] = uuid || '';
-    data[errJsonEnum.pageWh] = `${innerWidth} * ${innerHeight}`;
+    setCommonParams(data);
 
     const api = baseUrl + '/' + globalConf.aId,
         params = JSON.stringify(data);

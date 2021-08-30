@@ -1,7 +1,7 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-08-26 11:10:51
- * @LastEditTime: 2021-08-26 16:59:26
+ * @LastEditTime: 2021-08-30 11:23:49
  * @LastEditors: vscode
  * @Description:vue 错误上报
  */
@@ -25,11 +25,24 @@ export class VueError extends FeErrorReport {
     }
 
     errorSend(error: any, vm: any, info: any) {
+        const errMsg = error?.message,
+            stack = error.stack;
+
+        const errorList = stack
+            .substring(0, stack.indexOf(')'))
+            .replace(/(http|https)\:\/\//g, '')
+            .split('\n');
+
+        const [lineno, colno] = errorList[1].trimStart().split(':').slice(-2);
+
         const params: ErrorInfo = {
-            [errJsonEnum.msg]: error?.message + '. info -> ' + info,
-            [errJsonEnum.error]: error?.stack,
-            [errJsonEnum.category]: 'vue'
+            [errJsonEnum.lineno]: Number(lineno),
+            [errJsonEnum.colno]: Number(colno),
+            [errJsonEnum.error]: errorList.join(','),
+            [errJsonEnum.category]: 'vue',
+            [errJsonEnum.msg]: errMsg
         };
+
         if (Object.prototype.toString.call(vm) === '[object Object]') {
             console.error(error, 'no-send');
             super.send(params);

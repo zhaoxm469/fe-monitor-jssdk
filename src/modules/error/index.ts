@@ -4,7 +4,7 @@ import { PromiseError } from './promise.error';
 import { ResourcesError } from './resources.error';
 import { VueError } from './vue.error';
 
-export class FeErrorMonitor {
+export default class FeErrorMonitor {
     constructor() {
         this.init();
     }
