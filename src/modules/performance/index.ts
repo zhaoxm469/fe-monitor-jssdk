@@ -1,6 +1,6 @@
 import { clientReport } from '../../report';
 
-export default class FePerformance {
+export default class FePerformanceLog {
     downTime = 150;
     downTimer: any;
 

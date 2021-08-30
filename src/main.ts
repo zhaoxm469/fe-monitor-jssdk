@@ -1,8 +1,8 @@
-import FePerformance from './modules/performance';
-import FeErrorMonitor from './modules/error';
+import FePerformanceLog from './modules/performance';
 import { globalConf } from './conf/global';
-import FeApiMonitor from './modules/api';
-import FePv from './modules/pv';
+import FeErrorLog from './modules/error';
+import FeApiLog from './modules/api';
+import FePvLog from './modules/pv';
 import { iConf } from './types';
 import { guid } from './utils';
 
@@ -13,10 +13,10 @@ class Fmr {
     }
 
     init(): void {
-        if (globalConf.isPerformance) new FePerformance();
-        if (globalConf.isJsError) new FeErrorMonitor();
-        if (globalConf.isAjax) new FeApiMonitor();
-        if (globalConf.isPv) new FePv();
+        if (globalConf.isPerformance) new FePerformanceLog();
+        if (globalConf.isJsError) new FeErrorLog();
+        if (globalConf.isAjax) new FeApiLog();
+        if (globalConf.isPv) new FePvLog();
     }
 
     // 参数合并

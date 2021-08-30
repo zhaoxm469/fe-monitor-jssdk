@@ -1,7 +1,7 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-08-24 14:59:12
- * @LastEditTime: 2021-08-30 14:52:46
+ * @LastEditTime: 2021-08-30 15:03:46
  * @LastEditors: vscode
  * @Description: 监听api接口性能
  */
@@ -41,7 +41,7 @@ const setRequestParameters = ({
     };
 };
 
-export default class FeApiMonitor {
+export default class FeApiLog {
     constructor() {
         this.init();
     }
@@ -169,6 +169,7 @@ export default class FeApiMonitor {
                             : '';
                         params[ApiJsonEnum.httpSuccess] = !!response.ok;
                         params[ApiJsonEnum.httpStatusCode] = e.status;
+                        params[ApiJsonEnum.eventType] = e.type;
 
                         clientReport(params);
                     });
