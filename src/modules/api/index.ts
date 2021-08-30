@@ -1,12 +1,12 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-08-24 14:59:12
- * @LastEditTime: 2021-08-30 10:10:07
+ * @LastEditTime: 2021-08-30 14:52:46
  * @LastEditors: vscode
  * @Description: 监听api接口性能
  */
 
-import { globalConf } from '../../conf/global';
+import { baseUrl, globalConf } from '../../conf/global';
 import { clientReport } from '../../report';
 import { ApiJsonEnum, ApiErrorInfo, errJsonEnum } from '../../types';
 
@@ -16,12 +16,14 @@ const parseUrl = function (value: string | undefined) {
         : '';
 };
 
-const getCommonInfo = ({
+const setRequestParameters = ({
     httpStatusCode = 0,
-    sendBeginTime,
-    apiUrl,
     httpSuccess = false,
+    sendBeginTime,
     totalTime,
+    eventType,
+    methods,
+    apiUrl,
     msg,
     type
 }: any): ApiErrorInfo => {
@@ -31,8 +33,10 @@ const getCommonInfo = ({
         [ApiJsonEnum.apiUrl]: apiUrl,
         [ApiJsonEnum.httpSuccess]: httpSuccess,
         [ApiJsonEnum.totalTime]: totalTime,
-        [ApiJsonEnum.msg]: msg,
+        [ApiJsonEnum.methods]: methods,
         [errJsonEnum.level]: 'api',
+        [ApiJsonEnum.eventType]: eventType,
+        [ApiJsonEnum.msg]: msg,
         [ApiJsonEnum.type]: type
     };
 };
@@ -47,78 +51,87 @@ export default class FeApiMonitor {
     }
     // 重写xmlHttp
     hackXmlHttp() {
-        // 如果返回过长，会被截断，最长1000个字符
-        if ('function' == typeof window.XMLHttpRequest) {
-            let begin = 0,
-                apiUrl = '';
-            const oldXmlHttpRequest = window.XMLHttpRequest;
-            (window as any).XMLHttpRequest = function () {
-                const xhr = new oldXmlHttpRequest();
-                if (!xhr.addEventListener) return xhr;
-                const open = xhr.open,
-                    send = xhr.send;
+        let begin = 0,
+            apiUrl = '',
+            methods = '',
+            eventType = '';
 
-                xhr.open = function (method: string, url?: string) {
-                    const data: any =
-                        1 === arguments.length
-                            ? [arguments[0]]
-                            : Array.apply(null, arguments as any);
-                    apiUrl = parseUrl(url);
-                    open.apply(xhr, data);
-                };
-                xhr.send = function () {
-                    begin = Date.now();
-                    const data: any =
-                        1 === arguments.length
-                            ? [arguments[0]]
-                            : Array.apply(null, arguments as any);
-                    send.apply(xhr, data);
-                };
+        const oldXmlHttpRequest = window.XMLHttpRequest;
+        (window as any).XMLHttpRequest = function () {
+            const xhr = new oldXmlHttpRequest();
+            if (!xhr.addEventListener) return xhr;
 
-                xhr.onreadystatechange = function () {
-                    if (apiUrl && 4 === xhr.readyState) {
-                        const time = Date.now() - begin;
+            const open = xhr.open,
+                send = xhr.send;
 
-                        const msg =
-                            xhr.responseText.substr(
-                                0,
-                                globalConf.parameterLen
-                            ) || '';
+            xhr.open = function (method: string, url?: string) {
+                const data: any =
+                    1 === arguments.length
+                        ? [arguments[0]]
+                        : Array.apply(null, arguments as any);
+                apiUrl = parseUrl(url);
+                methods = method;
 
-                        const params = getCommonInfo({
-                            sendBeginTime: begin,
-                            apiUrl,
-                            httpSuccess: true,
-                            totalTime: time,
-                            msg,
-                            type: 'xml'
-                        });
-                        // 发送成功
-                        if (xhr.status >= 200 && xhr.status <= 299) {
-                            const status = xhr.status || 200;
-                            if ('function' == typeof xhr.getResponseHeader) {
-                                const r = xhr.getResponseHeader('Content-Type');
-                                if (r && !/(text)|(json)/.test(r)) return;
-                            }
-                            params[ApiJsonEnum.httpStatusCode] = status;
-                        } else {
-                            params[ApiJsonEnum.httpStatusCode] =
-                                xhr.status || 0;
-                            params[ApiJsonEnum.httpSuccess] = false;
-                        }
-
-                        clientReport(params);
-                    }
-                };
-                return xhr;
+                open.apply(xhr, data);
             };
-        }
+
+            xhr.send = function () {
+                begin = Date.now();
+                const data: any =
+                    1 === arguments.length
+                        ? [arguments[0]]
+                        : Array.apply(null, arguments as any);
+                send.apply(xhr, data);
+            };
+
+            xhr.onreadystatechange = function (e: any) {
+                eventType = e.type;
+
+                if (apiUrl && 4 === xhr.readyState) {
+                    const time = Date.now() - begin;
+
+                    const msg =
+                        // 如果返回过长，会被截断，最长1000个字符
+                        xhr.responseText.substr(0, globalConf.parameterLen) ||
+                        '';
+                    console.log(apiUrl);
+                    const params = setRequestParameters({
+                        sendBeginTime: begin,
+                        httpSuccess: true,
+                        totalTime: time,
+                        type: 'xml',
+                        eventType,
+                        methods,
+                        apiUrl,
+                        msg
+                    });
+
+                    // 发送成功
+                    if (xhr.status >= 200 && xhr.status <= 299) {
+                        const status = xhr.status || 200;
+                        if ('function' == typeof xhr.getResponseHeader) {
+                            const r = xhr.getResponseHeader('Content-Type');
+                            if (r && !/(text)|(json)/.test(r)) return;
+                        }
+                        params[ApiJsonEnum.httpStatusCode] = status;
+                    } else {
+                        params[ApiJsonEnum.httpStatusCode] = xhr.status || 0;
+                        params[ApiJsonEnum.httpSuccess] = false;
+                    }
+
+                    // 避免重复请求，判断如果是上报接口就不统计此接口性能
+                    if (!apiUrl.includes(baseUrl.substring(8)))
+                        clientReport(params);
+                }
+            };
+            return xhr;
+        };
     }
     // 重写Fetch
     hackFetch() {
         if (!window.fetch) return;
         const oldFetch = window.fetch;
-        const params = getCommonInfo({
+        const params = setRequestParameters({
             type: 'fetch'
         });
 

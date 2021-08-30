@@ -91,7 +91,11 @@ export enum ApiJsonEnum {
     // 接口错误信息
     msg = 'm',
     // 错误类型，是fetch 还是 xml
-    type = 'tp'
+    type = 'tp',
+    // 请求方法
+    methods = 'mds',
+    // xml Event事件类型
+    eventType = 'etp'
 }
 
 export interface ApiErrorInfo extends CommonReportLog {
@@ -102,6 +106,8 @@ export interface ApiErrorInfo extends CommonReportLog {
     [ApiJsonEnum.totalTime]?: number;
     [ApiJsonEnum.msg]?: string;
     [ApiJsonEnum.type]: ApiErrorType;
+    [ApiJsonEnum.methods]: string;
+    [ApiJsonEnum.eventType]: string;
 }
 
 export enum PvAliasEnum {

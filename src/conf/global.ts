@@ -14,5 +14,7 @@ export const globalConf: iConf = {
     isPerformance: true
 };
 
+export const GET_LEN = 2048;
+
 export const baseUrl = 'http://localhost:9987/reporter';
 // export const baseUrl = 'http://znode.nucarf.cn/nestApi/reporter';
