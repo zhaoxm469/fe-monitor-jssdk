@@ -1,7 +1,7 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-08-24 14:46:39
- * @LastEditTime: 2021-08-30 09:52:48
+ * @LastEditTime: 2021-08-30 15:51:49
  * @LastEditors: vscode
  * @Description:
  *
@@ -34,30 +34,46 @@ export function isArray(value: any) {
     return Object.prototype.toString.call(value) === '[object Array]';
 }
 
-/*
- * 获取事件冒泡路径，兼容ie11,edge,chrome,firefox,safari
- */
 export function getSelector() {
     if (lastEvent && lastEvent.path) {
-        const path = lastEvent.path
-            .filter((item) => {
-                const nodeName = (item as HTMLElement).nodeName;
-                const re = /HTML|document|window/gi;
-                if (!nodeName || re.test(nodeName)) return false;
-                return true;
-            })
-            .reverse()
-            .map((item) => {
-                const { id, classList, nodeName } = item as HTMLElement;
-                const newNodeName = nodeName.toLocaleLowerCase();
-                if (id) return `#${id}`;
-
-                if (classList.length)
-                    return `.${[...(classList as any)].join('.')}`;
-                return newNodeName;
-            })
-            .join('->');
-        return path;
+        return readXPath([...lastEvent.path][0] as HTMLElement);
     }
     return '';
+}
+
+function readXPath(element: HTMLElement): any {
+    if (element.id !== '') {
+        //判断id属性，如果这个元素有id，则显 示//*[@id="xPath"]  形式内容
+        return '//*[@id="' + element.id + '"]';
+    }
+
+    //这里需要需要主要字符串转译问题，可参考js 动态生成html时字符串和变量转译（注意引号的作用）
+    if (element == document.body) {
+        //递归到body处，结束递归
+        return element.tagName.toLowerCase();
+    }
+
+    let ix = 1,
+        siblings: any = element?.parentNode?.childNodes; //同级的子元素
+
+    if (!siblings) return '';
+    for (var i = 0, l = siblings.length; i < l; i++) {
+        const sibling = siblings[i],
+            tagName = sibling.tagName;
+
+        //如果这个元素是siblings数组中的元素，则执行递归操作
+        if (sibling == element) {
+            return (
+                readXPath(element.parentNode as HTMLElement) +
+                '>' +
+                element.tagName.toLowerCase() +
+                '[' +
+                ix +
+                ']'
+            );
+            //如果不符合，判断是否是element元素，并且是否是相同元素，如果是相同的就开始累加
+        } else if (sibling.nodeType == 1 && tagName == element.tagName) {
+            ix++;
+        }
+    }
 }
