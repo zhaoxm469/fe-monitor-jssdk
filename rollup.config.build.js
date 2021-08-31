@@ -45,7 +45,7 @@ export default defineConfig([
             }),
             terser(),
             replace({
-				'window.NODE_ENV': 'production'
+				'process.env.NODE_ENV': JSON.stringify('production')
             })
         ]
     },
