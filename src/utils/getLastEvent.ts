@@ -1,4 +1,4 @@
-export let lastEvent: NonNullable<Event>;
+export let lastEvent: NonNullable<any>;
 ['click', 'touchstart', 'mousedown', 'keydown', 'mouseover'].forEach(
     (eventType) => {
         document.addEventListener(

@@ -16,5 +16,7 @@ export const globalConf: iConf = {
 
 export const GET_LEN = 2048;
 
-export const baseUrl = 'http://localhost:9987/reporter';
-// export const baseUrl = 'http://znode.nucarf.cn/nestApi/reporter';
+export const baseUrl =
+    process.env.NODE_ENV === 'development'
+        ? 'http://localhost:9987/reporter'
+        : 'http://znode.nucarf.cn/nestApi/reporter';

@@ -1,6 +1,7 @@
 import nodeResolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 import { terser } from 'rollup-plugin-terser';
+import replace from 'rollup-plugin-replace';
 import babel from '@rollup/plugin-babel';
 import { defineConfig } from 'rollup';
 import dts from 'rollup-plugin-dts';
@@ -20,7 +21,7 @@ export default defineConfig([
                 file: resolve('./', pkg.main),
                 // 暴露外部的全局变量名称
                 format: 'umd',
-                name: 'AppCache'
+                name: 'Fmr'
             },
             {
                 file: resolve('./', pkg.module),
@@ -42,7 +43,10 @@ export default defineConfig([
                 exclude: 'node_modules/**',
                 extensions
             }),
-            terser()
+            terser(),
+            replace({
+				'window.NODE_ENV': 'production'
+            })
         ]
     },
     {

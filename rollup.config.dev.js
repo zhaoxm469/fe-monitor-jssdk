@@ -1,11 +1,11 @@
 import nodeResolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 import livereload from 'rollup-plugin-livereload';
+import replace from 'rollup-plugin-replace';
 import { defineConfig } from 'rollup';
 import dev from 'rollup-plugin-dev';
-import path from 'path';
-
 import pkg from './package.json';
+import path from 'path';
 
 const extensions = ['.js', '.ts'];
 
@@ -42,6 +42,10 @@ export default defineConfig({
             spa: './examples/index.html',
             force: true
         }),
-        livereload()
+        livereload(),
+        replace({
+			'process.env.NODE_ENV': JSON.stringify('development')
+        })
     ]
 });
+

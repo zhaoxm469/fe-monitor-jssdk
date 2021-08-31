@@ -5,3 +5,8 @@
  * @LastEditors: vscode
  * @Description:前端白屏监控
  */
+
+export default class {
+    constructor() {}
+    init() {}
+}

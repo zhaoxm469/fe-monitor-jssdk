@@ -33,7 +33,8 @@ export enum CommonEnum {
     category = 'cg',
     pageLocation = 'pl',
     pageWh = 'pwh',
-    selector = 'st'
+    selector = 'st',
+    viewPoint = 'vpt'
 }
 
 export interface CommonReportLog {
@@ -49,6 +50,8 @@ export interface CommonReportLog {
     [CommonEnum.category]?: CategoryType;
     // 当前发生事件的页面
     [CommonEnum.pageLocation]?: string;
+    // 屏幕视口大小
+    [CommonEnum.viewPoint]?: string;
 }
 
 export enum errJsonEnum {

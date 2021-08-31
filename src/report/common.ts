@@ -11,6 +11,7 @@ export function setCommonParams(data: any) {
     data[CommonEnum.uuid] = uuid || '';
     data[CommonEnum.pageWh] = `${innerWidth} * ${innerHeight}`;
     data[CommonEnum.selector] = getSelector();
+    data[CommonEnum.viewPoint] = '123';
 
     return data;
 }
