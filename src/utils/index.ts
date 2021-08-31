@@ -1,7 +1,7 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-08-24 14:46:39
- * @LastEditTime: 2021-08-30 17:02:52
+ * @LastEditTime: 2021-08-31 19:36:47
  * @LastEditors: vscode
  * @Description:
  *
@@ -35,6 +35,7 @@ export function isArray(value: any) {
 }
 
 export function getSelector() {
+    console.log(lastEvent);
     if (lastEvent && lastEvent.path) {
         return readXPath([...lastEvent.path][0] as HTMLElement);
     }
@@ -42,7 +43,7 @@ export function getSelector() {
 }
 
 function readXPath(element: HTMLElement): any {
-    if (element.id !== '') {
+    if (element.id !== '' && !!element.id) {
         //判断id属性，如果这个元素有id，则显 示//*[@id="xPath"]  形式内容
         return '//*[@id="' + element.id + '"]';
     }

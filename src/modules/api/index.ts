@@ -1,14 +1,21 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-08-24 14:59:12
- * @LastEditTime: 2021-08-30 15:03:46
+ * @LastEditTime: 2021-08-31 19:47:30
  * @LastEditors: vscode
  * @Description: 监听api接口性能
  */
 
+import { stringify } from 'querystring';
 import { baseUrl, globalConf } from '../../conf/global';
 import { clientReport } from '../../report';
-import { ApiJsonEnum, ApiErrorInfo, errJsonEnum } from '../../types';
+import {
+    ApiJsonEnum,
+    ApiErrorInfo,
+    errJsonEnum,
+    CommonEnum
+} from '../../types';
+import { getSelector } from '../../utils';
 
 const parseUrl = function (value: string | undefined) {
     return value && 'string' == typeof value
@@ -22,6 +29,7 @@ const setRequestParameters = ({
     sendBeginTime,
     totalTime,
     eventType,
+    selector,
     methods,
     apiUrl,
     msg,
@@ -30,14 +38,15 @@ const setRequestParameters = ({
     return {
         [ApiJsonEnum.httpStatusCode]: httpStatusCode,
         [ApiJsonEnum.sendBeginTime]: sendBeginTime,
-        [ApiJsonEnum.apiUrl]: apiUrl,
         [ApiJsonEnum.httpSuccess]: httpSuccess,
-        [ApiJsonEnum.totalTime]: totalTime,
-        [ApiJsonEnum.methods]: methods,
-        [errJsonEnum.level]: 'api',
         [ApiJsonEnum.eventType]: eventType,
-        [ApiJsonEnum.msg]: msg,
-        [ApiJsonEnum.type]: type
+        [ApiJsonEnum.totalTime]: totalTime,
+        [CommonEnum.selector]: selector,
+        [ApiJsonEnum.methods]: methods,
+        [ApiJsonEnum.apiUrl]: apiUrl,
+        [errJsonEnum.level]: 'api',
+        [ApiJsonEnum.type]: type,
+        [ApiJsonEnum.msg]: msg
     };
 };
 
@@ -54,7 +63,8 @@ export default class FeApiLog {
         let begin = 0,
             apiUrl = '',
             methods = '',
-            eventType = '';
+            eventType = '',
+            selector = '';
 
         const oldXmlHttpRequest = window.XMLHttpRequest;
         (window as any).XMLHttpRequest = function () {
@@ -71,6 +81,7 @@ export default class FeApiLog {
                         : Array.apply(null, arguments as any);
                 apiUrl = parseUrl(url);
                 methods = method;
+                selector = getSelector();
 
                 open.apply(xhr, data);
             };
@@ -94,13 +105,13 @@ export default class FeApiLog {
                         // 如果返回过长，会被截断，最长1000个字符
                         xhr.responseText.substr(0, globalConf.parameterLen) ||
                         '';
-                    console.log(apiUrl);
                     const params = setRequestParameters({
                         sendBeginTime: begin,
                         httpSuccess: true,
                         totalTime: time,
                         type: 'xml',
                         eventType,
+                        selector,
                         methods,
                         apiUrl,
                         msg
@@ -120,8 +131,9 @@ export default class FeApiLog {
                     }
 
                     // 避免重复请求，判断如果是上报接口就不统计此接口性能
-                    if (!apiUrl.includes(baseUrl.substring(8)))
+                    if (!apiUrl.includes(baseUrl.substring(8))) {
                         clientReport(params);
+                    }
                 }
             };
             return xhr;

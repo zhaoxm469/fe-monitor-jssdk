@@ -40,7 +40,7 @@ export default defineConfig({
             port: '8888',
             host: 'localhost',
             spa: './examples/index.html',
-            force: true
+            force: true,
         }),
         livereload(),
         replace({

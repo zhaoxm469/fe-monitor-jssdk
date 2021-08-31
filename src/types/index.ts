@@ -34,7 +34,8 @@ export enum CommonEnum {
     pageLocation = 'pl',
     pageWh = 'pwh',
     selector = 'st',
-    viewPoint = 'vpt'
+    viewPoint = 'vpt',
+    handleType = 'htp'
 }
 
 export interface CommonReportLog {
@@ -52,6 +53,10 @@ export interface CommonReportLog {
     [CommonEnum.pageLocation]?: string;
     // 屏幕视口大小
     [CommonEnum.viewPoint]?: string;
+    // 用户触发事件的行为类型
+    [CommonEnum.handleType]?: string;
+    // 用户触发事件的行为类型
+    [CommonEnum.selector]?: string;
 }
 
 export enum errJsonEnum {
