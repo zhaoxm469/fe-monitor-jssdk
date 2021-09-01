@@ -12,7 +12,7 @@ export function setCommonParams(data: any) {
     data[CommonEnum.uuid] = uuid || '';
     data[CommonEnum.pageWh] = `${innerWidth} * ${innerHeight}`;
     data[CommonEnum.viewPoint] = '123';
-    data[CommonEnum.handleType] = lastEvent.type;
+    data[CommonEnum.handleType] = lastEvent?.type || '';
 
     if (!data[CommonEnum.selector]) data[CommonEnum.selector] = getSelector();
 

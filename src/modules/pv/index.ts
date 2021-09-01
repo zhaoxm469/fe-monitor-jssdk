@@ -1,7 +1,7 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-08-26 17:51:29
- * @LastEditTime: 2021-08-30 15:01:17
+ * @LastEditTime: 2021-09-01 14:32:43
  * @LastEditors: vscode
  * @Description: 页面PV 数据自动上报
  */
@@ -16,7 +16,7 @@ export default class FePvLog {
     init() {
         const params: PvInfoLog = {
             [PvAliasEnum.title]: document.title || '暂无标题',
-            [PvAliasEnum.referrer]: 'string',
+            [PvAliasEnum.referrer]: document.referrer,
             [PvAliasEnum.devicePixelRatio]: window.devicePixelRatio + '' || '',
             [PvAliasEnum.charset]: document.charset || '',
             [CommonEnum.level]: 'pv'
