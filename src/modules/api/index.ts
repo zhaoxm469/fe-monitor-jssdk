@@ -1,16 +1,16 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-08-24 14:59:12
- * @LastEditTime: 2021-09-08 15:34:32
+ * @LastEditTime: 2021-09-08 15:42:58
  * @LastEditors: vscode
- * @Description: 监听api接口性能
+ * @Description: api 接口信息上报
  */
 
+import { lastEvent } from '../../utils/getLastEvent';
 import { clientReport } from '../../report';
 import { ApiLog } from '../../types/apiLog';
-import AnyXHR from './any-xhr';
 import { getSelector } from '../../utils';
-import { lastEvent } from '../../utils/getLastEvent';
+import AnyXHR from './any-xhr';
 
 export default class FeApiLog {
     constructor() {
