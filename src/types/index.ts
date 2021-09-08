@@ -18,6 +18,8 @@ export interface iConf {
     isUv?: boolean;
     // 是否上报前端页面性能
     isPerformance: boolean;
+    // 当前程序的类型 默认为H5
+    appType?: any;
 }
 
 type CategoryType = 'js' | 'resource' | 'promise' | 'console.error' | 'vue';
@@ -25,6 +27,7 @@ type CategoryType = 'js' | 'resource' | 'promise' | 'console.error' | 'vue';
 type reporterLevel = 'error' | 'performance' | 'api' | 'pv';
 
 export enum CommonEnum {
+    referrer = 'rer',
     aId = 'a',
     url = 'ul',
     uid = 'uid',
@@ -57,6 +60,8 @@ export interface CommonReportLog {
     [CommonEnum.handleType]?: string;
     // 用户触发事件的行为类型
     [CommonEnum.selector]?: string;
+    // 来源
+    [CommonEnum.referrer]?: string;
 }
 
 export enum errJsonEnum {
@@ -83,7 +88,7 @@ export interface ErrorInfo extends CommonReportLog {
     [errJsonEnum.error]?: string;
 }
 
-type ApiErrorType = 'xmlHttp' | 'fetch';
+type ApiType = 'xhr' | 'fetch';
 
 export enum ApiJsonEnum {
     // http状态码
@@ -96,33 +101,28 @@ export enum ApiJsonEnum {
     httpSuccess = 's',
     // 接口请求总耗时
     totalTime = 't',
-    // 接口错误信息
-    msg = 'm',
-    // 错误类型，是fetch 还是 xml
-    type = 'tp',
+    // 响应结果
+    resText = 'm',
+    // 请求参数
+    reqText = 'm',
     // 请求方法
-    methods = 'mds',
-    // xml Event事件类型
-    eventType = 'etp'
+    methods = 'mds'
 }
 
-export interface ApiErrorInfo extends CommonReportLog {
+export interface ApiInfo extends CommonReportLog {
     [ApiJsonEnum.httpStatusCode]?: number;
     [ApiJsonEnum.sendBeginTime]?: number;
     [ApiJsonEnum.apiUrl]?: string;
     [ApiJsonEnum.httpSuccess]?: boolean;
     [ApiJsonEnum.totalTime]?: number;
-    [ApiJsonEnum.msg]?: string;
-    [ApiJsonEnum.type]: ApiErrorType;
+    [ApiJsonEnum.resText]?: string;
+    [ApiJsonEnum.reqText]?: string;
     [ApiJsonEnum.methods]: string;
-    [ApiJsonEnum.eventType]: string;
 }
 
 export enum PvAliasEnum {
     // 标题是
     title = 't',
-    // 来源
-    referrer = 'r',
     // dpr
     devicePixelRatio = 'd',
     // document 编码
@@ -131,7 +131,6 @@ export enum PvAliasEnum {
 
 export interface PvInfoLog extends CommonReportLog {
     [PvAliasEnum.title]: string;
-    [PvAliasEnum.referrer]: string;
     [PvAliasEnum.devicePixelRatio]: string;
     [PvAliasEnum.charset]: string;
 }

@@ -7,7 +7,6 @@ interface Window {
     detachEvent: any;
     CustomEvent: any;
     __oXMLHttpRequest_: any;
-    XMLHttpRequest: any;
     __bb: any;
     __bb_onpopstate_: any;
 }
@@ -17,5 +16,8 @@ interface HTMLStyleElement {
         cssText: string;
     };
 }
+
+declare var uni: any;
+declare var zer: any;
 
 // declare module 'performance-kits';

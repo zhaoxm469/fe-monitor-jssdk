@@ -11,7 +11,7 @@ export default class FePerformanceLog {
         this.downTimer = setInterval(() => {
             const data = this.getExceptPaintInfo();
             if (data && data.analysisTime >= 0 && this.downTimer) {
-                console.log(data);
+                // console.log(data);
                 clearInterval(this.downTimer);
             }
         }, this.downTime);

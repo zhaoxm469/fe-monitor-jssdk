@@ -18,7 +18,7 @@ export default defineConfig({
             file: resolve('./', pkg.main),
             // 暴露外部的全局变量名称
             format: 'umd',
-            name: 'Fmr',
+			name: 'zer',
             sourcemap: true
         },
         {

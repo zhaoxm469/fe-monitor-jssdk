@@ -11,12 +11,15 @@ export const globalConf: iConf = {
     // 是否上报PV数据
     isPv: true,
     // 是否上报前端性能
-    isPerformance: true
+    isPerformance: true,
+    appType: 'h5'
 };
 
 export const GET_LEN = 2048;
 
-export const baseUrl =
-    process.env.NODE_ENV === 'development'
-        ? 'http://localhost:9987/reporter'
-        : 'http://znode.nucarf.cn/nestApi/reporter';
+// export const baseUrl =
+//     process.env.NODE_ENV === 'development'
+//         ? 'http://zzz:9987/reporter'
+//         : 'http://znode.nucarf.cn/nestApi/reporter';
+
+export const baseUrl = 'http://znode.nucarf.cn/nestApi/reporter';

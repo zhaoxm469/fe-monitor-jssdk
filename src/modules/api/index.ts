@@ -1,21 +1,14 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-08-24 14:59:12
- * @LastEditTime: 2021-08-31 19:47:30
+ * @LastEditTime: 2021-09-08 14:15:58
  * @LastEditors: vscode
  * @Description: 监听api接口性能
  */
 
-import { stringify } from 'querystring';
-import { baseUrl, globalConf } from '../../conf/global';
 import { clientReport } from '../../report';
-import {
-    ApiJsonEnum,
-    ApiErrorInfo,
-    errJsonEnum,
-    CommonEnum
-} from '../../types';
-import { getSelector } from '../../utils';
+import { ApiLog } from '../../types/apiLog';
+import AnyXHR from './any-xhr';
 
 const parseUrl = function (value: string | undefined) {
     return value && 'string' == typeof value
@@ -23,177 +16,53 @@ const parseUrl = function (value: string | undefined) {
         : '';
 };
 
-const setRequestParameters = ({
-    httpStatusCode = 0,
-    httpSuccess = false,
-    sendBeginTime,
-    totalTime,
-    eventType,
-    selector,
-    methods,
-    apiUrl,
-    msg,
-    type
-}: any): ApiErrorInfo => {
-    return {
-        [ApiJsonEnum.httpStatusCode]: httpStatusCode,
-        [ApiJsonEnum.sendBeginTime]: sendBeginTime,
-        [ApiJsonEnum.httpSuccess]: httpSuccess,
-        [ApiJsonEnum.eventType]: eventType,
-        [ApiJsonEnum.totalTime]: totalTime,
-        [CommonEnum.selector]: selector,
-        [ApiJsonEnum.methods]: methods,
-        [ApiJsonEnum.apiUrl]: apiUrl,
-        [errJsonEnum.level]: 'api',
-        [ApiJsonEnum.type]: type,
-        [ApiJsonEnum.msg]: msg
-    };
-};
-
 export default class FeApiLog {
     constructor() {
         this.init();
     }
     init() {
-        this.hackFetch();
-        this.hackXmlHttp();
+        this.hackXhr();
     }
-    // 重写xmlHttp
-    hackXmlHttp() {
-        let begin = 0,
-            apiUrl = '',
-            methods = '',
-            eventType = '',
-            selector = '';
+    hackXhr() {
+        const xhr = new AnyXHR();
 
-        const oldXmlHttpRequest = window.XMLHttpRequest;
-        (window as any).XMLHttpRequest = function () {
-            const xhr = new oldXmlHttpRequest();
-            if (!xhr.addEventListener) return xhr;
+        xhr.add('open', function (res: any) {
+            // @ts-ignore
+            const that: any = this;
+            const [methods, apiUrl] = res;
 
-            const open = xhr.open,
-                send = xhr.send;
-
-            xhr.open = function (method: string, url?: string) {
-                const data: any =
-                    1 === arguments.length
-                        ? [arguments[0]]
-                        : Array.apply(null, arguments as any);
-                apiUrl = parseUrl(url);
-                methods = method;
-                selector = getSelector();
-
-                open.apply(xhr, data);
-            };
-
-            xhr.send = function () {
-                begin = Date.now();
-                const data: any =
-                    1 === arguments.length
-                        ? [arguments[0]]
-                        : Array.apply(null, arguments as any);
-                send.apply(xhr, data);
-            };
-
-            xhr.onreadystatechange = function (e: any) {
-                eventType = e.type;
-
-                if (apiUrl && 4 === xhr.readyState) {
-                    const time = Date.now() - begin;
-
-                    const msg =
-                        // 如果返回过长，会被截断，最长1000个字符
-                        xhr.responseText.substr(0, globalConf.parameterLen) ||
-                        '';
-                    const params = setRequestParameters({
-                        sendBeginTime: begin,
-                        httpSuccess: true,
-                        totalTime: time,
-                        type: 'xml',
-                        eventType,
-                        selector,
-                        methods,
-                        apiUrl,
-                        msg
-                    });
-
-                    // 发送成功
-                    if (xhr.status >= 200 && xhr.status <= 299) {
-                        const status = xhr.status || 200;
-                        if ('function' == typeof xhr.getResponseHeader) {
-                            const r = xhr.getResponseHeader('Content-Type');
-                            if (r && !/(text)|(json)/.test(r)) return;
-                        }
-                        params[ApiJsonEnum.httpStatusCode] = status;
-                    } else {
-                        params[ApiJsonEnum.httpStatusCode] = xhr.status || 0;
-                        params[ApiJsonEnum.httpSuccess] = false;
-                    }
-
-                    // 避免重复请求，判断如果是上报接口就不统计此接口性能
-                    if (!apiUrl.includes(baseUrl.substring(8))) {
-                        clientReport(params);
-                    }
-                }
-            };
-            return xhr;
-        };
-    }
-    // 重写Fetch
-    hackFetch() {
-        if (!window.fetch) return;
-        const oldFetch = window.fetch;
-        const params = setRequestParameters({
-            type: 'fetch'
+            that.reportParams = {
+                httpStatusCode: '',
+                sendBeginTime: +new Date(),
+                apiUrl: parseUrl(apiUrl),
+                httpSuccess: false,
+                totalTime: '',
+                resText: '',
+                reqText: '',
+                methods
+            } as ApiLog;
         });
 
-        (window as any).fetch = function (t: any) {
-            const arg: any =
-                1 === arguments.length
-                    ? [arguments[0]]
-                    : Array.apply(null, arguments as any);
+        xhr.add('send', function (res: any) {
+            // @ts-ignore
+            const that: any = this;
+            that.reportParams.reqText = res[0];
+        });
 
-            const begin = Date.now(),
-                url = (t && 'string' != typeof t ? t.url : t) || '',
-                page = parseUrl(url as string);
+        xhr.add('onload', function () {
+            // @ts-ignore
+            const that: any = this;
+            const totalTime = Date.now() - that.reportParams.sendBeginTime;
 
-            params[ApiJsonEnum.apiUrl] = page;
-            params[ApiJsonEnum.sendBeginTime] = begin;
+            that.reportParams.httpStatusCode = that.status;
+            that.reportParams.httpSuccess =
+                that.status >= 200 && that.status < 300;
+            that.reportParams.resText = that.responseText;
+            that.reportParams.totalTime = totalTime + '';
+            that.reportParams.apiUrl = that.responseURL;
 
-            if (!page) return oldFetch.apply(window, arg);
-            return oldFetch
-                .apply(window, arg)
-                .then(function (e) {
-                    const response = e.clone(),
-                        headers = response.headers;
-
-                    const totalTime = +new Date() - begin;
-
-                    if (headers && 'function' === typeof headers.get) {
-                        const ct = headers.get('content-type');
-                        if (ct && !/(text)|(json)/.test(ct)) return e;
-                    }
-
-                    response.text().then(function (res) {
-                        params[ApiJsonEnum.totalTime] = totalTime;
-                        params[ApiJsonEnum.msg] = !response.ok
-                            ? res.substr(0, globalConf.parameterLen)
-                            : '';
-                        params[ApiJsonEnum.httpSuccess] = !!response.ok;
-                        params[ApiJsonEnum.httpStatusCode] = e.status;
-                        params[ApiJsonEnum.eventType] = e.type;
-
-                        clientReport(params);
-                    });
-                    return e;
-                })
-                .catch((error) => {
-                    const totalTime = +new Date() - begin;
-                    params[ApiJsonEnum.totalTime] = totalTime;
-                    params[ApiJsonEnum.msg] =
-                        'fetch-catch -> ' + error?.message;
-                    clientReport(params);
-                });
-        };
+            console.log(that.reportParams);
+            // clientReport(that.reportParams);
+        });
     }
 }

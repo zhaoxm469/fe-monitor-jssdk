@@ -6,7 +6,7 @@ import FePvLog from './modules/pv';
 import { iConf } from './types';
 import { guid } from './utils';
 
-class Fmr {
+class Zer {
     constructor(opts: iConf) {
         this.setConf(opts);
         this.init();
@@ -30,6 +30,14 @@ class Fmr {
     setUuid() {
         localStorage.setItem('fmr-uuid', guid());
     }
+
+    testPv() {
+        new FePvLog();
+    }
 }
 
-export default Fmr;
+export default function (opts: iConf) {
+    const zer = new Zer(opts);
+    globalThis['zer'] = zer;
+    return zer;
+}

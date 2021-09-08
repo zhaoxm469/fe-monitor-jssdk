@@ -29,5 +29,7 @@ module.exports = {
         'comma-dangle': 0,
         'import/no-extraneous-dependencies': 0
     },
-
+	globals:{
+		uni:true
+	}
 };

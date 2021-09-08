@@ -1,7 +1,7 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-08-24 10:53:10
- * @LastEditTime: 2021-08-31 19:30:03
+ * @LastEditTime: 2021-09-08 14:18:06
  * @LastEditors: vscode
  * @Description:发送请求方法封装
  * 1. sendBeacon
@@ -23,6 +23,8 @@ export function clientReport(data: any) {
     const api = baseUrl + '/' + globalConf.aId,
         params = JSON.stringify(data);
 
+    // return navSendBeacon(api, params);
+    // return imgSend(api, params);
     return xmlSend(api, params);
     // 如果支持sendBeacon 就是用此方法上传日志
     if ((navigator as any).sendBeacon) return navSendBeacon(api, params);

@@ -13,6 +13,10 @@ export function setCommonParams(data: any) {
     data[CommonEnum.pageWh] = `${innerWidth} * ${innerHeight}`;
     data[CommonEnum.viewPoint] = '123';
     data[CommonEnum.handleType] = lastEvent?.type || '';
+    data[CommonEnum.referrer] =
+        document.referrer && document.referrer !== location.href
+            ? document.referrer
+            : '';
 
     if (!data[CommonEnum.selector]) data[CommonEnum.selector] = getSelector();
 

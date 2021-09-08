@@ -1,20 +1,41 @@
 # 前端监控上报SDK
 
-## 使用
+## 接入Vue
 
 ```js
-const fmr = new Fmr({
-	aId:'xxxxx',
-	spa:true,
+
+import zer from 'zer-report'
+
+zer({
+	aId:'123123',
+	appType:Vue
 });
 
-fmr.report({
-	// 必填创建自定义监控项时自动生成
-	category: 100, 
-	msg: 'hello world',
-	// 自定义字段，支持c1~c5共5个字段
-	c1: 'xx' 
-}); 
+```
+
+## 接入H5
+
+```js
+
+import zer from 'zer-report'
+zer.aId = '123123123';
+
+```
+
+## 发送测试代码
+
+```js
+// 控制台执行
+zerReport.testPv();
+```
+
+## 自定义信息上报
+
+```js
+// 控制台执行
+zerReport.send({
+	id:'',
+});
 ```
 
 ## script 命令
