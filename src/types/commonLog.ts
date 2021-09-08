@@ -3,21 +3,18 @@ export type CategoryType =
     | 'resource'
     | 'promise'
     | 'console.error'
-    | 'vue';
+    | 'vue'
+    | '';
 
-export type LeaveType = 'error' | 'performance' | 'api' | 'pv';
+export type LeaveType = 'error' | 'performance' | 'api' | 'pv' | '';
 
 export interface CommonLog {
-    // 应用ID
-    aId?: string;
-    // 页面地址
-    url?: string;
     // 用户ID
     uid?: string;
     // 级别
-    level?: LeaveType;
+    level: LeaveType;
     // 分类
-    category?: CategoryType;
+    category: CategoryType;
     // 当前发生事件的页面
     pageLocation?: string;
     // 屏幕视口大小
@@ -28,4 +25,6 @@ export interface CommonLog {
     selector?: string;
     // 来源
     referrer?: string;
+    // 网页可是区域宽高
+    pageWh?: string;
 }

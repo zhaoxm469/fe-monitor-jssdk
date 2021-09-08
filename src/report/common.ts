@@ -1,4 +1,4 @@
-import { CommonEnum } from '../types';
+import { CommonLog } from '../types/commonLog';
 import { getSelector } from '../utils';
 import { lastEvent } from '../utils/getLastEvent';
 
@@ -8,17 +8,27 @@ import { lastEvent } from '../utils/getLastEvent';
 export function setCommonParams(data: any) {
     const { innerWidth, innerHeight } = window;
     const uuid = localStorage.getItem('fmr-uuid');
-    data[CommonEnum.pageLocation] = window.location.href;
-    data[CommonEnum.uuid] = uuid || '';
-    data[CommonEnum.pageWh] = `${innerWidth} * ${innerHeight}`;
-    data[CommonEnum.viewPoint] = '123';
-    data[CommonEnum.handleType] = lastEvent?.type || '';
-    data[CommonEnum.referrer] =
+
+    const referrer =
         document.referrer && document.referrer !== location.href
             ? document.referrer
             : '';
 
-    if (!data[CommonEnum.selector]) data[CommonEnum.selector] = getSelector();
+    const commonParams: Required<CommonLog> = {
+        pageLocation: window.location.href,
+        uid: uuid || '',
 
-    return data;
+        // 各个时间发送器自己定义
+        level: '',
+        // 各个时间发送器自己定义
+        category: '',
+
+        viewPoint: 'viewPoint',
+        pageWh: `${innerWidth} * ${innerHeight}`,
+        handleType: lastEvent?.type || '',
+        selector: getSelector(),
+        referrer
+    };
+
+    return Object.assign(commonParams, data);
 }

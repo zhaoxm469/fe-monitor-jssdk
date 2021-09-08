@@ -1,7 +1,7 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-08-24 10:53:10
- * @LastEditTime: 2021-09-08 14:18:06
+ * @LastEditTime: 2021-09-08 15:28:55
  * @LastEditors: vscode
  * @Description:发送请求方法封装
  * 1. sendBeacon
@@ -18,7 +18,7 @@ import xmlSend from './xmlHttp';
 
 // 发送请求上报
 export function clientReport(data: any) {
-    setCommonParams(data);
+    data = setCommonParams(data);
 
     const api = baseUrl + '/' + globalConf.aId,
         params = JSON.stringify(data);
