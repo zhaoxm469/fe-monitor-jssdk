@@ -1,7 +1,7 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-08-24 10:53:10
- * @LastEditTime: 2021-09-08 15:28:55
+ * @LastEditTime: 2021-09-08 15:41:26
  * @LastEditors: vscode
  * @Description:发送请求方法封装
  * 1. sendBeacon

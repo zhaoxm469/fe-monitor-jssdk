@@ -9,6 +9,8 @@
 import { clientReport } from '../../report';
 import { ApiLog } from '../../types/apiLog';
 import AnyXHR from './any-xhr';
+import { getSelector } from '../../utils';
+import { lastEvent } from '../../utils/getLastEvent';
 
 export default class FeApiLog {
     constructor() {
@@ -34,7 +36,9 @@ export default class FeApiLog {
                 totalTime: '',
                 resText: '',
                 reqText: '',
-                methods
+                methods,
+                handleType: lastEvent?.type || '',
+                selector: getSelector()
             };
             that.reportParams = reportParams;
         });
