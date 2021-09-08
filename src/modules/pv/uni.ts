@@ -1,7 +1,11 @@
 export default class Uni {
     constructor(private send: Function) {
-        if (!window.uni) return;
-        this.init();
+        try {
+            if (!uni) return;
+            this.init();
+        } catch (err) {
+            // 不做处理
+        }
     }
     init() {
         const funs = [
@@ -11,12 +15,12 @@ export default class Uni {
             'reLaunch',
             'navigateBack'
         ];
+        const that = this;
         for (let keyName of funs) {
             const oldFun = uni[keyName];
             uni[keyName] = function (...arg: any) {
-                console.log(`${keyName},${arg[0].url}`);
                 oldFun.apply(oldFun, arg);
-                this.send();
+                that.send();
             };
         }
     }
