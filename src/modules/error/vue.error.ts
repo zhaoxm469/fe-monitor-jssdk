@@ -37,8 +37,6 @@ export class VueError {
             const errMsg = error?.message,
                 stack = error.stack;
 
-            console.log(error.stack);
-
             const errorList = stack
                 .substring(0, stack.indexOf(')'))
                 .replace(/(http|https)\:\/\//g, '')

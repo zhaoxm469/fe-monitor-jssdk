@@ -1,7 +1,7 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-09-08 20:41:47
- * @LastEditTime: 2021-09-08 20:55:11
+ * @LastEditTime: 2021-09-08 21:47:50
  * @LastEditors: vscode
  * @Description:监听网页崩溃和卡顿
  *	http://jartto.wang/2018/11/20/js-exception-handling/index.html
@@ -22,7 +22,6 @@ export default class FeCollapse {
                     'time_before_crash',
                     new Date().toString()
                 );
-                console.log('time_before_crash');
             }, 1000);
         });
 

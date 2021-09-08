@@ -8,7 +8,6 @@ export let happenList = [];
             eventType,
             (event) => {
                 lastEvent = event;
-                console.log(event);
             },
             {
                 capture: true,
