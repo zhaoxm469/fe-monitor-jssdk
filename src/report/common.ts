@@ -23,7 +23,7 @@ export function setCommonParams(data: any) {
         // 各个时间发送器自己定义
         category: '',
 
-        viewPoint: 'viewPoint',
+        devicePixelRatio: window.devicePixelRatio || -0,
         pageWh: `${innerWidth} * ${innerHeight}`,
         handleType: lastEvent?.type || '',
         selector: getSelector(),

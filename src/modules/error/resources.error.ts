@@ -1,7 +1,7 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-08-24 11:24:10
- * @LastEditTime: 2021-08-25 17:26:10
+ * @LastEditTime: 2021-09-08 15:58:38
  * @LastEditors: vscode
  * @Description:
  * 		只捕获资源加载失败。
@@ -9,12 +9,11 @@
  * 		需要过滤无用的报错信息，避免和window.onError重复提交
  */
 
-import { errJsonEnum, ErrorInfo } from '../../types';
-import { FeErrorReport } from './common';
+import { clientReport } from '../../report';
+import { ResourcesErrorLog } from '../../types/errorLog';
 
-export class ResourcesError extends FeErrorReport {
+export class ResourcesError {
     constructor() {
-        super();
         this.init();
     }
     init() {
@@ -25,15 +24,17 @@ export class ResourcesError extends FeErrorReport {
             const target = ev.target as HTMLElement,
                 targetName = target.tagName.toLocaleLowerCase();
 
-            let src = target.getAttribute('src') || target.getAttribute('href');
+            const src =
+                target.getAttribute('src') || target.getAttribute('href');
 
-            const params: ErrorInfo = {
-                [errJsonEnum.category]: 'resource',
-                [errJsonEnum.url]: src ? src : '',
-                [errJsonEnum.targetName]: targetName
+            const params: ResourcesErrorLog = {
+                errorUrl: src ? src : '',
+                targetName,
+                level: 'error',
+                category: 'resource'
             };
 
-            super.send(params);
+            clientReport(params);
         }
     }
 }

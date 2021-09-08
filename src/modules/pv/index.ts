@@ -1,13 +1,13 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-08-26 17:51:29
- * @LastEditTime: 2021-09-07 15:26:40
+ * @LastEditTime: 2021-09-08 16:11:08
  * @LastEditors: vscode
  * @Description: 页面PV 数据自动上报
  */
 
 import { clientReport } from '../../report';
-import { CommonEnum, PvAliasEnum, PvInfoLog } from '../../types';
+import { PvLog } from '../../types/pvLog';
 import uni from './uni';
 
 export default class FePvLog {
@@ -16,15 +16,14 @@ export default class FePvLog {
         this.addEventRoute();
     }
     send() {
-        const params: PvInfoLog = {
-            [PvAliasEnum.title]: document.title || '暂无标题',
-            [PvAliasEnum.devicePixelRatio]: window.devicePixelRatio + '' || '',
-            [PvAliasEnum.charset]: document.charset || '',
-            [CommonEnum.level]: 'pv'
+        const params: PvLog = {
+            title: document.title,
+            level: 'pv',
+            category: ''
         };
         clientReport(params);
     }
     addEventRoute() {
-        uni(this.send);
+        new uni(this.send);
     }
 }

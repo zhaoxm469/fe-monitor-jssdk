@@ -1,6 +1,6 @@
 import { ConsoleError } from './console.error';
 import { JsError } from './js.error';
-import { PromiseError } from './promise.error';
+import { unhandledrejectionError } from './unhandledrejection.error';
 import { ResourcesError } from './resources.error';
 import { VueError } from './vue.error';
 
@@ -10,7 +10,7 @@ export default class FeErrorLog {
     }
     init(): void {
         new JsError();
-        new PromiseError();
+        new unhandledrejectionError();
         new ResourcesError();
         new ConsoleError();
         new VueError();

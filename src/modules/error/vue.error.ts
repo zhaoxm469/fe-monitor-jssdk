@@ -1,21 +1,20 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-08-26 11:10:51
- * @LastEditTime: 2021-09-07 11:29:04
+ * @LastEditTime: 2021-09-08 16:01:17
  * @LastEditors: vscode
  * @Description:vue 错误上报
  */
 
 import { globalConf } from '../../conf/global';
-import { errJsonEnum, ErrorInfo } from '../../types';
+import { clientReport } from '../../report';
+import { VueErrorLog } from '../../types/errorLog';
 import { isFunction } from '../../utils';
-import { FeErrorReport } from './common';
 
-export class VueError extends FeErrorReport {
+export class VueError {
     orderVueErrorHandler: any;
 
     constructor() {
-        super();
         this.init();
     }
     init() {
@@ -43,17 +42,19 @@ export class VueError extends FeErrorReport {
 
         const [lineno, colno] = errorList[1].trimStart().split(':').slice(-2);
 
-        const params: ErrorInfo = {
-            [errJsonEnum.lineno]: Number(lineno),
-            [errJsonEnum.colno]: Number(colno),
-            [errJsonEnum.error]: errorList.join(','),
-            [errJsonEnum.category]: 'vue',
-            [errJsonEnum.msg]: errMsg
+        const params: VueErrorLog = {
+            msg: errMsg,
+            source: '',
+            lineno: Number(lineno),
+            colno: Number(colno),
+            error: errorList.join(','),
+            level: 'error',
+            category: 'vue'
         };
 
         if (Object.prototype.toString.call(vm) === '[object Object]') {
             console.error(error, 'no-send');
-            super.send(params);
+            clientReport(params);
         }
 
         if (

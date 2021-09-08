@@ -1,17 +1,16 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-08-24 11:24:10
- * @LastEditTime: 2021-08-25 18:28:58
+ * @LastEditTime: 2021-09-08 15:51:57
  * @LastEditors: vscode
  * @Description: JS 全局异常捕获 ，但是不能捕获 el.onError 和 资源加载失败
  */
 
-import { errJsonEnum, ErrorInfo } from '../../types';
-import { FeErrorReport } from './common';
+import { clientReport } from '../../report';
+import { ErrorLog } from '../../types/errorLog';
 
-export class JsError extends FeErrorReport {
+export class JsError {
     constructor() {
-        super();
         this.init();
     }
     init() {
@@ -23,26 +22,26 @@ export class JsError extends FeErrorReport {
          * @param {number} colno 发生错误的列号
          * @param {object} error Error对象
          */
-        window.onerror = this.sendError;
+        window.onerror = this.sendError as any;
     }
 
     sendError(
         event: Event | string,
-        source?: string,
-        lineno?: number,
-        colno?: number,
-        error?: Error
+        source: string = '',
+        lineno: number = -1,
+        colno: number = -1,
+        error: Error
     ) {
-        const params: ErrorInfo = {
-            [errJsonEnum.msg]:
-                event instanceof Event ? event.toString() : event,
-            [errJsonEnum.source]: source,
-            [errJsonEnum.lineno]: lineno,
-            [errJsonEnum.colno]: colno,
-            [errJsonEnum.error]: error?.message,
-            [errJsonEnum.category]: 'js'
+        const params: ErrorLog = {
+            msg: event instanceof Event ? event.toString() : event,
+            source,
+            lineno,
+            colno,
+            error: error?.message,
+            level: 'error',
+            category: 'js'
         };
 
-        super.send(params);
+        clientReport(params);
     }
 }
