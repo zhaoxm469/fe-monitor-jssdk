@@ -1,4 +1,4 @@
-export default class Uni {
+export default class UniRouterMethods {
     constructor(private send: Function) {
         try {
             if (!uni) return;

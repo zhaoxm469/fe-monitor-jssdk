@@ -1,15 +1,14 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-08-24 14:59:12
- * @LastEditTime: 2021-09-08 16:48:56
+ * @LastEditTime: 2021-09-08 19:56:25
  * @LastEditors: vscode
  * @Description: api 接口信息上报
  */
 
-import { lastEvent } from '../../utils/getLastEvent';
+import { getEventInfo, lastEvent } from '../../utils/getLastEvent';
 import { clientReport } from '../../report';
 import { ApiLog } from '../../types/apiLog';
-import { getSelector } from '../../utils';
 import AnyXHR from './any-xhr';
 import { globalConf } from '../../conf/global';
 
@@ -24,6 +23,7 @@ export default class FeApiLog {
         const xhr = new AnyXHR();
 
         xhr.add('open', function (res: any) {
+            const { clientX, readXPath, clientY } = getEventInfo();
             // @ts-ignore
             const that: any = this;
             const [methods, apiUrl] = res;
@@ -38,8 +38,10 @@ export default class FeApiLog {
                 resText: '',
                 reqText: '',
                 methods,
+                clientX,
+                clientY,
                 handleType: lastEvent?.type || '',
-                selector: getSelector()
+                selector: readXPath
             };
             that.reportParams = reportParams;
         });
