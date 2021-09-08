@@ -3,9 +3,9 @@ import { iConf } from '../types';
 export const globalConf: iConf = {
     aId: '',
     // 上报参数长度
-    resLen: 1000,
+    resLen: 10000,
     // 上报参数长度
-    reqLen: 1000,
+    reqLen: 10000,
     // 是否上报ajax性能数据，错误等信息
     isAjax: true,
     // 是否上报JS报错
