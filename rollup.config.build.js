@@ -45,7 +45,7 @@ export default defineConfig([
             }),
             terser(),
             replace({
-				'process.env.NODE_ENV': cJSON.stringify('production')
+				'process.env.NODE_ENV': JSON.stringify('production')
             })
         ]
     },
