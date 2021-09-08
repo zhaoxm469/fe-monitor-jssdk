@@ -24,3 +24,7 @@ export interface PerformanceLog extends CommonLog {
     // 页面完全加载时间（load）
     pageLoadTime: number;
 }
+
+export interface ResourcesPerformanceLog extends CommonLog {
+    list: PerformanceEntry[];
+}

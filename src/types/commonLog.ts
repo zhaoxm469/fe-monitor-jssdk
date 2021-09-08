@@ -6,6 +6,7 @@ export type CategoryType =
     | 'vue'
     | 'xhr'
     | 'fetch'
+    | 'pageTime'
     | 'collapse'
     | '';
 
