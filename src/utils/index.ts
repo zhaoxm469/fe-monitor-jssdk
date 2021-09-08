@@ -1,13 +1,13 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-08-24 14:46:39
- * @LastEditTime: 2021-09-08 19:53:41
+ * @LastEditTime: 2021-09-08 22:05:57
  * @LastEditors: vscode
  * @Description:
  *
  */
 export function guid() {
-    return 'xxxx-xxxx-4xxx-xxxx-xxxx'.replace(/[xy]/g, function (c) {
+    return 'xxxx-xxxx-xxxx-xxxx'.replace(/[xy]/g, function (c) {
         var r = (Math.random() * 16) | 0,
             v = c == 'x' ? r : (r & 0x3) | 0x8;
         return v.toString(16);
