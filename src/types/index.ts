@@ -7,7 +7,9 @@ export interface iConf {
     // JS报错
     jsError?: boolean;
     // 参数长度
-    parameterLen?: number;
+    resLen?: number;
+    // 参数长度
+    reqLen?: number;
     // 是否上报ajax性能数据，错误等信息
     isAjax: boolean;
     // 是否上报JS报错
