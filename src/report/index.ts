@@ -26,9 +26,7 @@ export function clientReport(data: any) {
     // if (Math.random() < 0.3) {
     // }
 
-    // return navSendBeacon(BASE_URL, params);
-    // return imgSend(BASE_URL, params);
-    return xmlSend(BASE_URL, params);
+    // return xmlSend(BASE_URL, params);
     // 如果支持sendBeacon 就是用此方法上传日志
     if ((navigator as any).sendBeacon) return navSendBeacon(BASE_URL, params);
     // 兼容各个平台，GET 请求参数不超过 GET_SIZE 字节的大小
