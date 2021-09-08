@@ -1,4 +1,5 @@
 import { clientReport } from '../../report';
+import { PerformanceLog } from '../../types/performance';
 
 export default class FePerformanceLog {
     downTime = 150;
@@ -11,8 +12,8 @@ export default class FePerformanceLog {
         this.downTimer = setInterval(() => {
             const data = this.getExceptPaintInfo();
             if (data && data.analysisTime >= 0 && this.downTimer) {
-                // console.log(data);
                 clearInterval(this.downTimer);
+                clientReport(data);
             }
         }, this.downTime);
     }
@@ -21,7 +22,7 @@ export default class FePerformanceLog {
             !window.performance.getEntriesByType('navigation') ||
             !window.performance.getEntriesByType('navigation').length
         ) {
-            return;
+            return undefined;
         }
 
         const performanceNavigationTiming = window.performance.getEntriesByType(
@@ -94,7 +95,7 @@ export default class FePerformanceLog {
             // 页面完全加载时间（load）
             pageLoadTime = loadEventStart - fetchStart;
 
-        return {
+        const params: PerformanceLog = {
             redirectTime,
             dnsTime,
             ttfbTime,
@@ -105,7 +106,10 @@ export default class FePerformanceLog {
             analysisTime,
             blankTime,
             domReadyTime,
-            pageLoadTime
+            pageLoadTime,
+            level: 'performance',
+            category: ''
         };
+        return params;
     }
 }

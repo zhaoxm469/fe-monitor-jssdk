@@ -1,11 +1,14 @@
 export let lastEvent: any = null;
 
+export let happenList = [];
+
 ['click', 'touchstart', 'mousedown', 'keydown', 'mouseover'].forEach(
     (eventType) => {
         document.addEventListener(
             eventType,
             (event) => {
                 lastEvent = event;
+                console.log(event);
             },
             {
                 capture: true,

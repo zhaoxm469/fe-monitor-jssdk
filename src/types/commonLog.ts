@@ -6,11 +6,14 @@ export type CategoryType =
     | 'vue'
     | 'xhr'
     | 'fetch'
+    | 'collapse'
     | '';
 
 export type LeaveType = 'error' | 'performance' | 'api' | 'pv' | '';
 
 export interface CommonLog {
+    // 应用ID
+    aId?: string;
     // 用户ID
     uid?: string;
     // 级别

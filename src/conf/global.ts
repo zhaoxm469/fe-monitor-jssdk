@@ -26,4 +26,4 @@ export const GET_LEN = 2048;
 //         : 'http://znode.nucarf.cn/nestApi/reporter';
 
 // export const baseUrl = 'http://znode.nucarf.cn/nestApi/reporter';
-export const baseUrl = '/nestApi/reporter';
+export const BASE_URL = 'http://znode.nucarf.cn/nestApi/reporter/1.gif';

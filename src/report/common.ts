@@ -1,3 +1,4 @@
+import { globalConf } from '../conf/global';
 import { CommonLog } from '../types/commonLog';
 import { getEventInfo, lastEvent } from '../utils/getLastEvent';
 
@@ -16,6 +17,7 @@ export function setCommonParams(data: any) {
     const { clientX, readXPath, clientY } = getEventInfo();
 
     const commonParams: Required<CommonLog> = {
+        aId: globalConf.aId,
         pageLocation: window.location.href,
         uid: uuid || '',
 

@@ -36,3 +36,7 @@ export interface VueErrorLog extends ErrorLog {
     // 组件名称
     componentName: any;
 }
+
+export interface CollapseErrorLog extends ErrorLog {
+    time_before_crash: string;
+}
