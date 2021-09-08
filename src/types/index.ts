@@ -22,4 +22,6 @@ export interface iConf {
     isPerformance: boolean;
     // 当前程序的类型 默认为H5
     appType?: any;
+    // 版本号
+    appVersion?: string;
 }

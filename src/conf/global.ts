@@ -14,6 +14,7 @@ export const globalConf: iConf = {
     isPv: true,
     // 是否上报前端性能
     isPerformance: true,
+    // 当前应用类型
     appType: 'h5'
 };
 

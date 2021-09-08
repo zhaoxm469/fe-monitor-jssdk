@@ -25,6 +25,8 @@ export interface CommonLog {
     handleType?: string;
     // 用户触发事件的行为类型
     selector?: string;
+    clientX?: number;
+    clientY?: number;
     // 来源
     referrer?: string;
     // 网页可是区域宽高

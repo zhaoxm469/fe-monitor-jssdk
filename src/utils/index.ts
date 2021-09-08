@@ -1,7 +1,7 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-08-24 14:46:39
- * @LastEditTime: 2021-08-31 20:27:27
+ * @LastEditTime: 2021-09-08 18:42:07
  * @LastEditors: vscode
  * @Description:
  *
@@ -36,6 +36,7 @@ export function isArray(value: any) {
 
 export function getSelector() {
     if (lastEvent && lastEvent.path) {
+        console.log(lastEvent);
         return readXPath([...lastEvent.path][0] as HTMLElement);
     }
     return '';

@@ -10,8 +10,8 @@ export interface ErrorLog extends CommonLog {
     lineno: number;
     // 列
     colno: number;
-    // error信息
-    error: string;
+    // 错误堆栈
+    stack: any;
 }
 
 // console.error 信息上报
@@ -32,4 +32,7 @@ export interface ResourcesErrorLog extends CommonLog {
 }
 
 // VUE 报错信息
-export interface VueErrorLog extends ErrorLog {}
+export interface VueErrorLog extends ErrorLog {
+    // 组件名称
+    componentName: any;
+}

@@ -1,7 +1,7 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-08-24 11:24:10
- * @LastEditTime: 2021-09-08 15:51:57
+ * @LastEditTime: 2021-09-08 18:07:34
  * @LastEditors: vscode
  * @Description: JS 全局异常捕获 ，但是不能捕获 el.onError 和 资源加载失败
  */
@@ -37,7 +37,7 @@ export class JsError {
             source,
             lineno,
             colno,
-            error: error?.message,
+            stack: error?.stack,
             level: 'error',
             category: 'js'
         };

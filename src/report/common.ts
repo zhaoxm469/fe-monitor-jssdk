@@ -22,7 +22,8 @@ export function setCommonParams(data: any) {
         level: '',
         // 各个时间发送器自己定义
         category: '',
-
+        clientX: lastEvent ? lastEvent.clientX : -1,
+        clientY: lastEvent ? lastEvent.clientY : -1,
         devicePixelRatio: window.devicePixelRatio || -0,
         pageWh: `${innerWidth} * ${innerHeight}`,
         handleType: lastEvent?.type || '',
