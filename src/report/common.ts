@@ -14,7 +14,7 @@ export function setCommonParams(data: any) {
             ? document.referrer
             : '';
 
-    const { clientX, readXPath, clientY } = getEventInfo();
+    const { clientX, readXPath, clientY, handleType } = getEventInfo();
     const navigator: any = window.navigator;
 
     const commonParams: Required<CommonLog> = {
@@ -31,7 +31,7 @@ export function setCommonParams(data: any) {
         clientY,
         devicePixelRatio: window.devicePixelRatio || -0,
         pageWh: `${innerWidth} * ${innerHeight}`,
-        handleType: lastEvent?.type || '',
+        handleType,
         selector: readXPath,
         referrer
     };

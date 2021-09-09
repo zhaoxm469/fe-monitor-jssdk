@@ -1,7 +1,7 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-08-24 14:59:12
- * @LastEditTime: 2021-09-09 11:37:24
+ * @LastEditTime: 2021-09-09 15:15:42
  * @LastEditors: vscode
  * @Description: api 接口信息上报
  */
@@ -23,7 +23,7 @@ export default class FeApiLog {
         const xhr = new AnyXHR();
 
         xhr.add('open', function (res: any) {
-            const { clientX, readXPath, clientY } = getEventInfo();
+            const { clientX, readXPath, clientY, handleType } = getEventInfo();
             // @ts-ignore
             const that: any = this;
             const [methods, apiUrl] = res;
@@ -40,7 +40,7 @@ export default class FeApiLog {
                 methods,
                 clientX,
                 clientY,
-                handleType: lastEvent?.type || '',
+                handleType,
                 selector: readXPath
             };
             that.reportParams = reportParams;

@@ -22,13 +22,15 @@ export function getEventInfo() {
     let data = {
         readXPath: '',
         clientX: -1,
-        clientY: -1
+        clientY: -1,
+        handleType: ''
     };
     if (lastEvent && lastEvent.path) {
         data = {
             readXPath: readXPath([...lastEvent.path][0] as HTMLElement),
             clientX: lastEvent.clientX || -1,
-            clientY: lastEvent.clientY || -1
+            clientY: lastEvent.clientY || -1,
+            handleType: lastEvent.type
         };
         lastEvent = null;
     }
