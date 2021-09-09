@@ -13,7 +13,8 @@ export const globalConf: iConf = {
     isPerformance: true,
     appType: 'h5',
     appVersion: '',
-    uId: ''
+    uId: '',
+    ignore: ''
 };
 
 // export const baseUrl =

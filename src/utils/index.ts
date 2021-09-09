@@ -1,7 +1,7 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-08-24 14:46:39
- * @LastEditTime: 2021-09-08 22:05:57
+ * @LastEditTime: 2021-09-09 12:57:56
  * @LastEditors: vscode
  * @Description:
  *
@@ -18,16 +18,16 @@ export function isFunction(val: any) {
     return typeof val === 'function';
 }
 
-// 函数toString方法
-export const fnToString = function (e: string) {
-    return function () {
-        return e + '() { [native code] }';
-    };
-};
-
-/**
- * @description: 判断是否位数组
- */
+// 判断是否位数组
 export function isArray(value: any) {
     return Object.prototype.toString.call(value) === '[object Array]';
+}
+
+// 对象类型名称
+export function objectTypeName(value: any) {
+    return Object.prototype.toString
+        .call(value)
+        .substring(8)
+        .replace(/]/, '')
+        .toLocaleLowerCase();
 }
