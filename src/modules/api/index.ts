@@ -1,12 +1,12 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-08-24 14:59:12
- * @LastEditTime: 2021-09-09 15:15:42
+ * @LastEditTime: 2021-09-09 15:18:25
  * @LastEditors: vscode
  * @Description: api 接口信息上报
  */
 
-import { getEventInfo, lastEvent } from '../../utils/getLastEvent';
+import { getEventInfo } from '../../utils/getLastEvent';
 import { clientReport } from '../../report';
 import { ApiLog } from '../../types/apiLog';
 import AnyXHR from './any-xhr';
