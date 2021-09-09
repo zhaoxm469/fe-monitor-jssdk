@@ -45,7 +45,8 @@ export default defineConfig([
             }),
             terser(),
             replace({
-				'process.env.NODE_ENV': JSON.stringify('production')
+				'process.env.NODE_ENV': JSON.stringify('production'),
+				'APP_VERSION': JSON.stringify(pkg.version)
             })
         ]
     },

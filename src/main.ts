@@ -1,5 +1,5 @@
 import FePerformanceLog from './modules/performance';
-import { globalConf, VERSION } from './conf/global';
+import { globalConf } from './conf/global';
 import FeErrorLog from './modules/error';
 import FeApiLog from './modules/api';
 import FePvLog from './modules/pv';
@@ -7,7 +7,7 @@ import { iConf } from './types';
 import { guid } from './utils';
 class Zer {
     static instance: Zer;
-    version = VERSION;
+    version = APP_VERSION;
 
     constructor() {
         this.init();

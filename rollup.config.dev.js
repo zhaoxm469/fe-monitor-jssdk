@@ -45,7 +45,8 @@ export default defineConfig({
         }),
         livereload(),
         replace({
-			'process.env.NODE_ENV': JSON.stringify('development')
+			'process.env.NODE_ENV': JSON.stringify('development'),
+			'APP_VERSION': JSON.stringify(pkg.version)
         })
     ]
 });
