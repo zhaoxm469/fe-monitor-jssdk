@@ -1,7 +1,7 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-09-08 21:39:08
- * @LastEditTime: 2021-09-08 22:00:12
+ * @LastEditTime: 2021-09-09 11:28:33
  * @LastEditors: vscode
  * @Description:资源加载性能上报，这里只统计大于1秒中加载完成的资源
  */
@@ -26,7 +26,7 @@ export default class ResourcesTime {
                 level: 'performance',
                 category: 'resource'
             };
-            clientReport(params);
+            if (resources.length) clientReport(params);
         });
     }
 }
