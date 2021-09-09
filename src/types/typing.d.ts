@@ -1,14 +1,7 @@
-interface Navigator {
-    connection: any;
-}
-
 interface Window {
     attachEvent: any;
     detachEvent: any;
     CustomEvent: any;
-    __oXMLHttpRequest_: any;
-    __bb: any;
-    __bb_onpopstate_: any;
 }
 
 interface HTMLStyleElement {
@@ -17,7 +10,5 @@ interface HTMLStyleElement {
     };
 }
 
-declare var uni: any;
-declare var zer: any;
-
-// declare module 'performance-kits';
+declare const uni: any;
+declare const APP_VERSION: any;
