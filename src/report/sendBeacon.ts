@@ -1,7 +1,7 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-08-24 10:53:39
- * @LastEditTime: 2021-09-09 10:02:19
+ * @LastEditTime: 2021-09-09 10:51:25
  * @LastEditors: vscode
  * @Description:
  *
@@ -11,5 +11,5 @@
  */
 
 export default function (api: string, params: string) {
-    (navigator as any).sendBeacon(api, params);
+    navigator.sendBeacon(api, params);
 }
