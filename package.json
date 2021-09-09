@@ -1,6 +1,6 @@
 {
     "name": "zer-report",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "description": "前端监控上报SDK",
     "keywords": [],
     "scripts": {
