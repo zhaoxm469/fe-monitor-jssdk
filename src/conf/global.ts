@@ -1,7 +1,7 @@
 import { iConf } from '../types';
 
-const TEST_BASE_URL = 'http://localhost:9987/report';
-const PRO_BASE_URL = 'http://znode.nucarf.cn/nestApi/report';
+const TEST_BASE_URL = '//localhost:9987/report';
+const PRO_BASE_URL = '//znode.nucarf.cn/nestApi/report';
 export const BASE_URL =
     process.env.NODE_ENV === 'development' ? TEST_BASE_URL : PRO_BASE_URL;
 
