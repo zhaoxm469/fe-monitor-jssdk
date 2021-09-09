@@ -1,6 +1,7 @@
 import { iConf } from '../types';
 
-export const BASE_URL = 'http://znode.nucarf.cn/nestApi/reporter';
+// export const BASE_URL = 'http://localhost:9987/report';
+export const BASE_URL = 'http://znode.nucarf.cn/nestApi/report';
 export const GET_LEN = 2048;
 
 export const globalConf: iConf = {
