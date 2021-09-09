@@ -1,7 +1,6 @@
 import { iConf } from '../types';
 
 export const BASE_URL = 'http://znode.nucarf.cn/nestApi/reporter/1.gif';
-export const VERSION = '0.0.1';
 export const GET_LEN = 2048;
 
 export const globalConf: iConf = {
