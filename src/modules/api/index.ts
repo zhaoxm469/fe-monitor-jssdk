@@ -1,7 +1,7 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-08-24 14:59:12
- * @LastEditTime: 2021-09-08 20:08:11
+ * @LastEditTime: 2021-09-09 11:37:24
  * @LastEditors: vscode
  * @Description: api 接口信息上报
  */
@@ -49,7 +49,14 @@ export default class FeApiLog {
         xhr.add('send', function (res: any) {
             // @ts-ignore
             const that: any = this;
-            that.reportParams.reqText = res[0].substring(0, globalConf.reqLen);
+            try {
+                that.reportParams.reqText = res[0].substring(
+                    0,
+                    globalConf.reqLen
+                );
+            } catch (err) {
+                that.reportParams.reqText = '';
+            }
         });
 
         xhr.add('onload', function () {
@@ -69,10 +76,15 @@ export default class FeApiLog {
             that.reportParams.httpStatusCode = that.status;
             that.reportParams.httpSuccess =
                 that.status >= 200 && that.status < 300;
-            that.reportParams.resText = that.responseText.substring(
-                0,
-                globalConf.resLen
-            );
+            try {
+                that.reportParams.resText = that.responseText.substring(
+                    0,
+                    globalConf.resLen
+                );
+            } catch (err) {
+                that.reportParams.resText = '';
+            }
+
             that.reportParams.totalTime = totalTime + '';
 
             clientReport(that.reportParams);

@@ -1,7 +1,7 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-08-26 11:10:51
- * @LastEditTime: 2021-09-08 18:11:14
+ * @LastEditTime: 2021-09-09 11:36:42
  * @LastEditors: vscode
  * @Description:vue 错误上报
  */
@@ -37,15 +37,19 @@ export class VueError {
             const errMsg = error?.message,
                 stack = error.stack;
 
-            const errorList = stack
-                .substring(0, stack.indexOf(')'))
-                .replace(/(http|https)\:\/\//g, '')
-                .split('\n');
+            try {
+                const errorList = stack
+                    .substring(0, stack.indexOf(')'))
+                    .replace(/(http|https)\:\/\//g, '')
+                    .split('\n');
 
-            const [lineno, colno] = errorList[1]
-                .trimStart()
-                .split(':')
-                .slice(-2);
+                var [lineno, colno] = errorList[1]
+                    .trimStart()
+                    .split(':')
+                    .slice(-2);
+            } catch (err) {
+                var [lineno, colno] = [-1, -1] as any;
+            }
 
             const params: VueErrorLog = {
                 msg: errMsg,
