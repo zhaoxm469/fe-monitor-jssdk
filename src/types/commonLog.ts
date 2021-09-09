@@ -16,7 +16,11 @@ export interface CommonLog {
     // 应用ID
     aId?: string;
     // 用户ID
-    uid?: string;
+    uId?: string;
+    // 应用版本号
+    appVersion?: string;
+    // 自定义的用户id
+    uuid?: string;
     // 级别
     level: LeaveType;
     // 分类

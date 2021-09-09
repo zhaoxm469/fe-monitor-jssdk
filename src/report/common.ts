@@ -7,7 +7,7 @@ import { getEventInfo, lastEvent } from '../utils/getLastEvent';
  */
 export function setCommonParams(data: any) {
     const { innerWidth, innerHeight } = window;
-    const uuid = localStorage.getItem('fmr-zer');
+    const uuid = localStorage.getItem('zer-uuid');
 
     const referrer =
         document.referrer && document.referrer !== location.href
@@ -18,9 +18,10 @@ export function setCommonParams(data: any) {
 
     const commonParams: Required<CommonLog> = {
         aId: globalConf.aId,
+        uId: globalConf.uId,
+        appVersion: '',
         pageLocation: window.location.href,
-        uid: uuid || '',
-
+        uuid: uuid || '',
         // 各个时间发送器自己定义
         level: '',
         // 各个时间发送器自己定义
