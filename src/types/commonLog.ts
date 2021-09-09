@@ -33,10 +33,16 @@ export interface CommonLog {
     handleType?: string;
     // 用户触发事件的行为类型
     selector?: string;
+    // 元素X坐标
     clientX?: number;
+    // 元素Y坐标
     clientY?: number;
+    // 客户端UA标识
+    ua?: string;
     // 来源
     referrer?: string;
     // 网页可是区域宽高
     pageWh?: string;
+    // 用户当前网络状态
+    effectiveType?: string;
 }

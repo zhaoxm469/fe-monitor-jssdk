@@ -15,6 +15,7 @@ export function setCommonParams(data: any) {
             : '';
 
     const { clientX, readXPath, clientY } = getEventInfo();
+    const navigator: any = window.navigator;
 
     const commonParams: Required<CommonLog> = {
         aId: globalConf.aId,
@@ -22,10 +23,10 @@ export function setCommonParams(data: any) {
         appVersion: '',
         pageLocation: window.location.href,
         uuid: uuid || '',
-        // 各个时间发送器自己定义
         level: '',
-        // 各个时间发送器自己定义
         category: '',
+        ua: navigator?.userAgent,
+        effectiveType: navigator?.connection?.effectiveType,
         clientX,
         clientY,
         devicePixelRatio: window.devicePixelRatio || -0,
