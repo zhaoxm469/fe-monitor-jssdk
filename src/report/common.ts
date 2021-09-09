@@ -20,7 +20,7 @@ export function setCommonParams(data: any) {
     const commonParams: Required<CommonLog> = {
         aId: globalConf.aId,
         uId: globalConf.uId,
-        appVersion: '',
+        appVersion: globalConf.appVersion,
         pageLocation: window.location.href,
         uuid: uuid || '',
         level: '',
