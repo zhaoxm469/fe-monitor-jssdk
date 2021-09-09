@@ -47,3 +47,4 @@ isJsError|是否上报JS报错|boolean|否|true
 isPv|是否上报PV数据|boolean|否|true
 isPerformance|是否上报前端性能|boolean|否|true
 appType|当前应用类型|string | Function |否|'h5'
+ignore|当前应用类型|RegExp | string | (RegExp|string)[] |否|''
