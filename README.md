@@ -1,4 +1,4 @@
-# 前端监控上报SDK
+# 前端监控JS SDK
 
 ## 接入Vue
 
@@ -38,24 +38,4 @@ zerReport.send({
 });
 ```
 
-## script 命令
 
-开发, 预览. 访问地址对应 /examples/index.html 页面
-
-* npm run dev  
-
-打包
-
-* npm run build
-
-推送到npm远程
-
-* npm run npmp
-
-运行测试用例
-
-* npm run test
-
-输出可视化测试覆盖报表
-
-* npm run coverage

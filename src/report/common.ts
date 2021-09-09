@@ -7,7 +7,7 @@ import { getEventInfo, lastEvent } from '../utils/getLastEvent';
  */
 export function setCommonParams(data: any) {
     const { innerWidth, innerHeight } = window;
-    const uuid = localStorage.getItem('fmr-uuid');
+    const uuid = localStorage.getItem('fmr-zer');
 
     const referrer =
         document.referrer && document.referrer !== location.href

@@ -1,9 +1,9 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-08-24 10:53:10
- * @LastEditTime: 2021-09-08 20:56:17
+ * @LastEditTime: 2021-09-09 10:02:15
  * @LastEditors: vscode
- * @Description:发送请求方法封装
+ * @Description: 日志上报方法
  * 1. sendBeacon
  * 2. img
  * 3. xmlHttp

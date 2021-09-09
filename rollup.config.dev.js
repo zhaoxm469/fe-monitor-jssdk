@@ -18,7 +18,7 @@ export default defineConfig({
             file: resolve('./', pkg.main),
             // 暴露外部的全局变量名称
             format: 'umd',
-			name: 'zer',
+			name: 'zerReport',
             sourcemap: true
         },
         {
@@ -39,7 +39,7 @@ export default defineConfig({
         dev({
             port: '8888',
             host: 'localhost',
-            spa: './examples/index.html',
+            spa: './examples/a.html',
             force: true,
         }),
         livereload(),
