@@ -1,7 +1,7 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-08-24 10:53:18
- * @LastEditTime: 2021-09-10 09:48:15
+ * @LastEditTime: 2021-09-10 10:39:23
  * @LastEditors: vscode
  * @Description:img方式进行日志上报
  *
@@ -23,5 +23,6 @@ export default function (api: string, data: CommonLog) {
         delete data.referrer;
     }
     const oImg = new Image();
-    oImg.src = api + '/1.gif?params=' + JSON.stringify(data);
+    oImg.src =
+        api + '/1.gif?params=' + encodeURIComponent(JSON.stringify(data));
 }
