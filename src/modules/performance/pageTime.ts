@@ -1,7 +1,7 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-09-08 21:39:27
- * @LastEditTime: 2021-09-08 22:00:36
+ * @LastEditTime: 2021-09-10 09:31:19
  * @LastEditors: vscode
  * @Description:页面性能上上报
  * 	window.performance.getEntriesByType('navigation')
