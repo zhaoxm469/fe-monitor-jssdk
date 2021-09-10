@@ -1,7 +1,7 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-08-24 10:53:18
- * @LastEditTime: 2021-09-10 09:42:35
+ * @LastEditTime: 2021-09-10 09:48:15
  * @LastEditors: vscode
  * @Description:img方式进行日志上报
  *
@@ -15,7 +15,7 @@ import { CommonLog } from '../types/commonLog';
 
 export default function (api: string, data: CommonLog) {
     // 如果是这几种类型的日志上报 ， 无需传递以下字段给服务端
-    if (data.level === 'pv' || data.level === 'performance') {
+    if (data.level === 'pv' || data.category === 'pageTime') {
         delete data.clientX;
         delete data.clientY;
         delete data.selector;

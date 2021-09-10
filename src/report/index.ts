@@ -1,7 +1,7 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-08-24 10:53:10
- * @LastEditTime: 2021-09-10 09:38:38
+ * @LastEditTime: 2021-09-10 09:49:10
  * @LastEditors: vscode
  * @Description: 日志上报
  */
@@ -30,9 +30,8 @@ export function clientReport(data: CommonLog) {
 
     // 当下几种类型数据传输较少，直接使用img方式进行请求发送
     if (
-        data.level === 'pv' ||
-        data.category === 'collapse' ||
-        data.level === 'performance'
+        (data.level === 'pv' || data.category === 'pageTime') &&
+        params.length < GET_LEN
     ) {
         return imgSend(BASE_URL, data);
     }
