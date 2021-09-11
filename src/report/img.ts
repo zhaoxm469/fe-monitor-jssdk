@@ -14,14 +14,6 @@
 import { CommonLog } from '../types/commonLog';
 
 export default function (api: string, data: CommonLog) {
-    // 如果是这几种类型的日志上报 ， 无需传递以下字段给服务端
-    if (data.level === 'pv' || data.category === 'pageTime') {
-        delete data.clientX;
-        delete data.clientY;
-        delete data.selector;
-        delete data.handleType;
-        delete data.referrer;
-    }
     const oImg = new Image();
     oImg.src =
         api + '/1.gif?params=' + encodeURIComponent(JSON.stringify(data));

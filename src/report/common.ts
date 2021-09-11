@@ -24,6 +24,7 @@ export function setCommonParams(data: any) {
         pageLocation: window.location.href,
         uuid: uuid || '',
         level: '',
+        createTime: String(+new Date()),
         category: '',
         ua: navigator?.userAgent,
         effectiveType: navigator?.connection?.effectiveType,
@@ -36,5 +37,25 @@ export function setCommonParams(data: any) {
         referrer
     };
 
-    return Object.assign(commonParams, data);
+    return ignoreKeys(Object.assign(commonParams, data));
+}
+
+function ignoreKeys(params: CommonLog) {
+    // 如果是这几种类型的日志上报 ， 无需传递以下字段给服务端
+    if (params.level === 'pv' || params.category === 'pageTime') {
+        delete params.clientX;
+        delete params.clientY;
+        delete params.selector;
+        delete params.handleType;
+        delete params.referrer;
+    }
+
+    if (params.level === 'performance' && params.category === 'resource') {
+        delete params.clientX;
+        delete params.clientY;
+        delete params.selector;
+        delete params.handleType;
+    }
+
+    return params;
 }

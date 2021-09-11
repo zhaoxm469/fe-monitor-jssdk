@@ -45,4 +45,6 @@ export interface CommonLog {
     pageWh?: string;
     // 用户当前网络状态
     effectiveType?: string;
+    // 发送时间
+    createTime?: string;
 }
