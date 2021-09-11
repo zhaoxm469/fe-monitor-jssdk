@@ -1,7 +1,7 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-09-08 21:39:27
- * @LastEditTime: 2021-09-10 09:31:19
+ * @LastEditTime: 2021-09-11 11:33:43
  * @LastEditors: vscode
  * @Description:页面性能上上报
  * 	window.performance.getEntriesByType('navigation')
@@ -20,7 +20,12 @@ export default class PageTime {
     init() {
         this.downTimer = setInterval(() => {
             const data = this.getExceptPaintInfo();
-            if (data && data.analysisTime >= 0 && this.downTimer) {
+            if (
+                data &&
+                data.analysisTime >= 0 &&
+                this.downTimer &&
+                data.pageLoadTime >= 0
+            ) {
                 clearInterval(this.downTimer);
                 clientReport(data);
             }
