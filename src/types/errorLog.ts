@@ -38,5 +38,5 @@ export interface VueErrorLog extends ErrorLog {
 }
 
 export interface CollapseErrorLog extends ErrorLog {
-    time_before_crash: string;
+    time_before_crash: number;
 }
