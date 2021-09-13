@@ -7,7 +7,9 @@
         "dev": "rollup --c rollup.config.dev.js --watch",
         "build": "rollup --c rollup.config.build.js",
         "commit": "cz",
-        "npmp": "node npmpublish",
+        "npmp": "node ./autojs/npmpublish",
+		"pcdn":" zx ./autojs/pushCdn.mjs",
+		"ab":"npm run build && npm run npmp && npm run pcdn",
         "test": "jest",
         "coverage": "jest --coverage"
     },
