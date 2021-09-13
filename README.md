@@ -7,8 +7,11 @@ import zer from 'zer-report'
 
 zer({
 	aId:'xxxx-xxxx-xxxx',
+	ignore:['Script error'],
+	uId:localStorage.getItem("uId"),
 	appType:Vue
 });
+
 ```
 
 ## 接入H5
