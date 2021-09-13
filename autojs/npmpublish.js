@@ -5,9 +5,9 @@ const fs = require('fs');
 const chalk = require('chalk');
 const execa = require('execa');
 const ora = require('ora');
-const { version, name: pkgName } = require('./package.json');
+const { version, name: pkgName } = require('../package.json');
 
-const pkgPath = path.resolve(__dirname, './package.json');
+const pkgPath = path.resolve(__dirname, '../package.json');
 
 const pkg = fs.readFileSync(pkgPath, 'utf-8');
 const newVersion = (`${version.replace(/\D/g, '') - '' + 1}`).padStart(3, '0').split('').join('.');
