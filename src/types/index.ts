@@ -1,4 +1,5 @@
 export type IgnoreArrayType = (RegExp | string)[];
+
 export interface iConf {
     aId: string;
     // 用户ID
@@ -21,4 +22,8 @@ export interface iConf {
     appVersion: string;
     // 忽略上报
     ignore: RegExp | string | IgnoreArrayType;
+    // GET请求最大长度
+    getMaxLen: number;
+    // 采集率 ，单位0-100
+    collectionRate: number;
 }

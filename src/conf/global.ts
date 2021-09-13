@@ -1,27 +1,23 @@
 import { iConf } from '../types';
 
-const TEST_BASE_URL = '//localhost:9987/report';
-const PRO_BASE_URL = '//znode.nucarf.cn/nestApi/report';
-export const BASE_URL =
-    process.env.NODE_ENV === 'development' ? TEST_BASE_URL : PRO_BASE_URL;
+const PRO = '//znode.nucarf.cn/nestApi/report';
+const DEV = '//localhost:9987/report';
+const NODE_ENV = process.env.NODE_ENV;
 
-export const GET_LEN = 2048;
+export const BASE_URL = NODE_ENV === 'development' ? DEV : PRO;
 
 export const globalConf: iConf = {
     aId: '',
     resLen: 1024 * 10,
     reqLen: 1024 * 10,
-    isAjax: true,
+    isAjax: false,
     isJsError: true,
     isPv: true,
     isPerformance: true,
     appType: 'h5',
     appVersion: '',
     uId: '',
-    ignore: ''
+    ignore: '',
+    getMaxLen: 2048,
+    collectionRate: 1
 };
-
-// export const baseUrl =
-//     process.env.NODE_ENV === 'development'
-//         ? 'http://zzz:9987/reporter'
-//         : 'http://znode.nucarf.cn/nestApi/reporter';
