@@ -1,7 +1,7 @@
 /*
  * @Author: zhaoxingming
  * @Date: 2021-08-24 10:53:10
- * @LastEditTime: 2021-09-13 15:00:19
+ * @LastEditTime: 2021-09-23 11:05:22
  * @LastEditors: vscode
  * @Description: 日志上报
  */
@@ -16,10 +16,10 @@ import navSendBeacon from './sendBeacon';
 import xmlSend from './xmlHttp';
 import imgSend from './img';
 
-const { getMaxLen, ignore, collectionRate } = globalConf;
-
 // 发送请求上报
 export function clientReport(data: CommonLog) {
+    const { getMaxLen, collectionRate } = globalConf;
+
     data = setCommonParams(data);
 
     const params = JSON.stringify(data);
@@ -50,11 +50,13 @@ function isUseImg(data: CommonLog) {
         data.category === 'pageTime' ||
         data.category === 'resource';
 
-    return isUseType && JSON.stringify(data).length < getMaxLen;
+    return isUseType && JSON.stringify(data).length < globalConf.getMaxLen;
 }
 
 // 是否忽略当前上报请求
 function isIgnore(params: string): boolean {
+    const { ignore } = globalConf;
+
     if (!ignore) return false;
 
     if (typeof ignore === 'string' && params.includes(ignore)) {
