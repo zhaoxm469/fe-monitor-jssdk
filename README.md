@@ -6,10 +6,10 @@
 import zer from 'zer-report'
 
 zer({
-	aId:'xxxx-xxxx-xxxx',
-	ignore:['Script error'],
-	uId:localStorage.getItem("uId"),
-	appType:Vue
+  aId:'xxxx-xxxx-xxxx',
+  ignore:['Script error'],
+  uId:localStorage.getItem("uId"),
+  appType:Vue
 });
 
 ```
@@ -20,7 +20,7 @@ zer({
 
 import zer from 'zer-report'
 zer({
-	aId:'xxxx-xxxx-xxxx',
+  aId:'xxxx-xxxx-xxxx',
 });
 
 ```
@@ -32,7 +32,7 @@ zer({
 <script src="xxx"></script>
 <script>
 	zerReport({
-		aId:'xxxx-xxxx-xxxx',
+	  aId:'xxxx-xxxx-xxxx',
 	})
 </script>
 
