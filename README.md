@@ -29,7 +29,7 @@ zer({
 
 ```html
 
-<script src="xxx"></script>
+<script src="https://cdn.jsdelivr.net/npm/zer-report/dist/index.umd.js"></script>
 <script>
 zerReport({
     aId:'xxxx-xxxx-xxxx',
