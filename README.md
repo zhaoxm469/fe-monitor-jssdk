@@ -31,9 +31,9 @@ zer({
 
 <script src="xxx"></script>
 <script>
-	zerReport({
-	  aId:'xxxx-xxxx-xxxx',
-	})
+zerReport({
+    aId:'xxxx-xxxx-xxxx',
+})
 </script>
 
 ```
